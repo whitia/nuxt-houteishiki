@@ -41,7 +41,7 @@ export const actions = {
   fetchCards({ commit }) {
     console.log(cardRef)
     cardRef
-    .orderBy('created_at')
+    .orderBy('created_at', 'desc')
     .limit(9)
     .get()
     .then(res => {

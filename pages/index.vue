@@ -1,11 +1,13 @@
 <template>
   <div class="container">
+    <!--
     <div class="title is-1 is-spaced">user: {{ $store.getters.getUserName }}</div>
     <div>
       <button class="button is-primary is-rounded" @click="login">
         ログイン
       </button>
     </div>
+    -->
 
     <table class="table is-narrow">
       <tbody>
@@ -26,6 +28,7 @@
       </tbody>
     </table>
 
+    <!--
     <div class="field is-grouped">
       <p class="control is-expanded">
         <input v-model="newTitle" class="input" type="text" placeholder="title">
@@ -39,6 +42,7 @@
         </a>
       </p>
     </div>
+    -->
   </div>
 </template>
 
