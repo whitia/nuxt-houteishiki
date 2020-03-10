@@ -1,5 +1,38 @@
 <template>
-  <div class="container">
+  <div>
+    <b-navbar variant="faded" type="light" class="shadow-sm mb-5">
+      <div class="container px-3">
+        <b-navbar-brand href="/">
+          <img src="https://placekitten.com/g/30/30" alt="Kitten">
+        </b-navbar-brand>
+        <b-navbar-nav class="ml-auto">
+          <b-button size="sm" variant="light" @click="login">ログイン</b-button>
+        </b-navbar-nav>
+      </div>
+    </b-navbar>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-4" v-for="(card,key) in $store.getters.getCards" v-bind:key="key">
+          <b-card
+            :title="card.title"
+            img-alt="Image"
+            img-top
+            tag="card"
+            class="mb-5 rounded-0 text-center shadow-sm"
+          >
+            <b-card-text>
+              {{ card.formula.value_1 }} ×
+              {{ card.formula.value_2 }} ＝
+              {{ card.formula.valuation }}
+            </b-card-text>
+          </b-card>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
     <!--
     <div class="title is-1 is-spaced">user: {{ $store.getters.getUserName }}</div>
     <div>
@@ -8,26 +41,6 @@
       </button>
     </div>
     -->
-
-    <table class="table is-narrow">
-      <tbody>
-        <tr>
-          <th>title</th>
-          <th>value_1</th>
-          <th>value_2</th>
-          <th>valuation</th>
-        </tr>
-      </tbody>
-      <tbody>
-        <tr v-for="(card,key) in $store.getters.getCards" :key="key">
-          <td>{{ card.title }}</td>
-          <td>{{ card.formula.value_1 }}</td>
-          <td>{{ card.formula.value_2 }}</td>
-          <td>{{ card.formula.valuation }}</td>
-        </tr>
-      </tbody>
-    </table>
-
     <!--
     <div class="field is-grouped">
       <p class="control is-expanded">
@@ -43,8 +56,6 @@
       </p>
     </div>
     -->
-  </div>
-</template>
 
 <script>
 export default {
@@ -58,7 +69,6 @@ export default {
   },
   methods: {
     login() {
-      console.log('login')
       this.$store.dispatch('login')
     },
     addCard() {
@@ -82,7 +92,8 @@ export default {
 }
 </script>
 
-<style>
+<!--
+<style lang="scss">
 .container {
   margin: 0 auto;
   min-height: 100vh;
@@ -92,3 +103,4 @@ export default {
   text-align: center;
 }
 </style>
+-->

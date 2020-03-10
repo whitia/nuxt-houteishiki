@@ -26,36 +26,30 @@ export const mutations = {
 
 export const actions = {
   login({ commit }) {
-    console.log('login action')
     const provider = new firebase.auth.GoogleAuthProvider();
     firebase.auth().signInWithPopup(provider).then(function(result) {
       const user = result.user;
-      console.log('success : ' + user.uid + ' : ' + user.displayName)
       commit('setUserUid', user.uid)
       commit('setUserName', user.displayName)
     }).catch(function(error) {
-      var errorCode = error.code;
-      console.log('error : ' + error)
+      console.error('An error occurred in login(): ', error)
     });
   },
   fetchCards({ commit }) {
-    console.log(cardRef)
     cardRef
     .orderBy('created_at', 'desc')
     .limit(9)
     .get()
     .then(res => {
       res.forEach((doc) => {
-        console.log('success : ' + `${doc.id} => ${doc.data()}`);
         commit('addCard', doc.data());
       })
     })
     .catch(error => {
-      console.log('error : ' + error)
+      console.error('An error occurred in fetchCards(): ', error)
     })
   },
   addCard({ commit }, card) {
-    console.log(card)
     cardRef
     .add({
       title: card.title,
@@ -68,11 +62,10 @@ export const actions = {
       updated_at: firebase.firestore.FieldValue.serverTimestamp()
     })
     .then(docRef => {
-      console.log('Document written with ID: ', docRef.id)
       commit('addCard', card)
     })
     .catch(error => {
-      console.error('error: ', error)
+      console.error('An error occurred in addCard(): ', error)
     })
   }
 }
