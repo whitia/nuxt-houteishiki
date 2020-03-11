@@ -13,7 +13,8 @@
   "dependencies": {
     "bootstrap-vue": "^2.6.1",
     "firebase": "^7.10.0",
-    "nuxt": "^2.0.0"
+    "nuxt": "^2.0.0",
+    "uuid": "^7.0.2"
   },
   "devDependencies": {
     "node-sass": "^4.13.1",
