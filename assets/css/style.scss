@@ -1,30 +1,80 @@
-$font-color: #5e5e5e;
+$font-color: #747474;
+$bg-color: #e1fff6;
 
 body {
   color: $font-color;
-  background-color: #f9f9f9;
+  background-color: #fff;
   //font-family: 'Kosugi Maru', sans-serif;
+}
+a {
+  color: $font-color;
+}
+a:hover {
+  color: $font-color;
+  text-decoration: none;
 }
 
 .header {
-  background-color: #fff;
+  background-color: $bg-color;
   .login-button {
+    font-size: 8px;
     padding: 0;
     padding-right: 8px;
+    border: 1px solid #aaa;
+    transition: all 0.5s;
+    background-color: #fff;
     img {
       background-color: #fff;
+      border-right: 1px solid #aaa;
       padding: 8px;
       margin-right: 8px;
     }
+  }
+  .login-button:hover {
+    color: #fff;
+    background-color: #aaa;
   }
 }
 
 .card {
   transition: all 0.5s;
 }
-.card:hover {
-  color: $font-color;
-  transition : all 0.5s;
+a:hover .card {
   transform: scale(1.05);
   box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+    position: relative;
+    min-height: 100%;
+}
+body {
+  /* Margin bottom by footer height */
+  margin-bottom: 80px;
+}
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    /* Set the fixed height of the footer here */
+    background-color: $bg-color;
+    padding: 16px 0;
+    color: $font-color;
+    font-size: 8px;
+    text-align: center;
+    a {
+        color: #888;
+    }
+    a:hover {
+        color: #666;
+    }
+    img {
+        -webkit-filter: invert(50%);
+        -moz-filter: invert(50%);
+        -o-filter: invert(50%);
+        -ms-filter: invert(50%);
+        filter: invert(30%);
+    }
 }

@@ -3,13 +3,13 @@
     <Header />
 
     <div class="container">
-      <b-form @submit.prevent="addCard" enctype="multipart/form-data">
+      <b-form @submit.prevent="updateCard" enctype="multipart/form-data">
         <div class="row justify-content-center">
           <div class="col-12 col-sm-8">
             <b-form-group label="題名" label-for="title">
               <b-form-input
                 id="title"
-                v-model="card.title"
+                :value="card.title"
                 required
                 placeholder="題名"
               ></b-form-input>
@@ -21,7 +21,7 @@
             <b-form-group label="値1" label-for="value_1">
               <b-form-input
                 id="value_1"
-                v-model="card.formula.value_1"
+                :value="card.formula.value_1"
                 required
                 placeholder="値1"
               ></b-form-input>
@@ -32,7 +32,7 @@
             <b-form-group label="値2" label-for="value_2">
               <b-form-input
                 id="value_2"
-                v-model="card.formula.value_2"
+                :value="card.formula.value_2"
                 required
                 placeholder="値2"
               ></b-form-input>
@@ -43,7 +43,7 @@
             <b-form-group label="答え" label-for="valuation">
               <b-form-input
                 id="valuation"
-                v-model="card.formula.valuation"
+                :value="card.formula.valuation"
                 required
                 placeholder="答え"
               ></b-form-input>
@@ -51,7 +51,6 @@
           </div>
           <div class="col-12 col-sm-8">
             <b-form-file
-              v-model="card.image"
               placeholder="画像ファイルを選択してください"
               drop-placeholder="画像ファイルをドラッグ＆ドロップしてください"
               accept="image"
@@ -59,11 +58,12 @@
               class="mt-3"
               plain
             ></b-form-file>
+            <img :src="card.image" class="img-fluid" />
           </div>
         </div>
         <div class="row justify-content-center mt-4">
           <div class="col-12 col-sm-2">
-            <b-button block type="submit" variant="dark">新規投稿</b-button>
+            <b-button block type="submit" variant="dark">編集</b-button>
           </div>
         </div>
       </b-form>
@@ -83,35 +83,28 @@ export default {
     Header: Header,
     Footer: Footer
   },
-  data() {
+  data: function() {
     return {
-      card: {
-        title: null,
-        formula: {
-          value_1: null,
-          value_2: null,
-          valuation: null,
-        },
-        image: null
-      }
+      card: this.$route.params.card
     }
   },
   methods: {
-    addCard() {
-      const title = this.card.title
+    updateCard(e) {
+      const target = this.$route.params.card.id
+      const title = e.target.title.value
       const formula = {
-        value_1: this.card.formula.value_1,
-        value_2: this.card.formula.value_2,
-        valuation: this.card.formula.valuation
+        value_1: e.target.value_1.value,
+        value_2: e.target.value_2.value,
+        valuation: e.target.valuation.value
       }
 
       const id = uuidv4()
       this.$store.dispatch('uploadImage', {
         name: id,
-        file: this.card.image
+        file: e.target.image.files[0]
       })
         .then(image => {
-          this.$store.dispatch('addCard', { id, title, formula, image })
+          this.$store.dispatch('updateCard', { target, id, title, formula, image })
           this.card = {
             title: null,
             formula: {
@@ -126,3 +119,4 @@ export default {
   },
 }
 </script>
+

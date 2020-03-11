@@ -26,6 +26,7 @@ export const actions = {
       });
   },
   fetchCards({ commit }) {
+    commit('clearCard')
     cardRef
       .orderBy('created_at', 'desc')
       .limit(9)
@@ -37,22 +38,6 @@ export const actions = {
         })
         .catch(error => {
           console.error('An error occurred in fetchCards(): ', error)
-        })
-  },
-  addCard({ commit }, card) {
-    cardRef
-      .add({
-        title: card.title,
-        formula: card.formula,
-        url: card.url,
-        created_at: firebase.firestore.FieldValue.serverTimestamp(),
-        updated_at: firebase.firestore.FieldValue.serverTimestamp()
-      })
-        .then(docRef => {
-          commit('addCard', card)
-        })
-        .catch(error => {
-          console.error('An error occurred in addCard(): ', error)
         })
   },
   uploadImage({ commit }, image) {
@@ -73,7 +58,46 @@ export const actions = {
             console.error('An error occurred in uploadImage(): ', error)
           })
     })
-  }
+  },
+  addCard({ commit }, card) {
+    cardRef
+      .add({
+        id: card.id,
+        title: card.title,
+        formula: card.formula,
+        image: card.image,
+        created_at: firebase.firestore.FieldValue.serverTimestamp(),
+        updated_at: firebase.firestore.FieldValue.serverTimestamp()
+      })
+        .then(docRef => {
+          commit('addCard', card)
+        })
+        .catch(error => {
+          console.error('An error occurred in addCard(): ', error)
+        })
+  },
+  updateCard({ commit }, card) {
+    cardRef.where('id', '==', card.target).get()
+      .then(snapshot => {
+        snapshot.forEach(doc => {
+          cardRef
+            .doc(doc.id)
+            .update({
+              id: card.id,
+              title: card.title,
+              formula: card.formula,
+              image: card.image,
+              updated_at: firebase.firestore.FieldValue.serverTimestamp()
+            })
+              .then(docRef => {
+                commit('addCard', card)
+              })
+              .catch(error => {
+                console.error('An error occurred in addCard(): ', error)
+              })
+        })
+      })
+  },
 }
 
 export const mutations = {
