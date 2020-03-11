@@ -2,7 +2,21 @@ $font-color: #5e5e5e;
 
 body {
   color: $font-color;
-  font-family: 'Kosugi Maru', sans-serif;
+  background-color: #f9f9f9;
+  //font-family: 'Kosugi Maru', sans-serif;
+}
+
+.header {
+  background-color: #fff;
+  .login-button {
+    padding: 0;
+    padding-right: 8px;
+    img {
+      background-color: #fff;
+      padding: 8px;
+      margin-right: 8px;
+    }
+  }
 }
 
 .card {

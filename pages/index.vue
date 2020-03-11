@@ -1,15 +1,6 @@
 <template>
   <div>
-    <b-navbar variant="faded" type="light" class="shadow-sm mb-5">
-      <div class="container px-3">
-        <b-navbar-brand href="/">
-          <img src="https://placekitten.com/g/30/30" alt="Kitten">
-        </b-navbar-brand>
-        <b-navbar-nav class="ml-auto">
-          <b-button size="sm" variant="light" @click="login">ログイン</b-button>
-        </b-navbar-nav>
-      </div>
-    </b-navbar>
+    <Header />
 
     <div class="container">
       <div class="row">
@@ -19,7 +10,7 @@
             img-alt="Image"
             img-top
             tag="card"
-            class="mb-5 rounded-0 text-center shadow-sm"
+            class="mb-5 rounded-0 border-0 text-center"
           >
             <b-card-text>
               {{ card.formula.value_1 }} ×
@@ -58,6 +49,8 @@
     -->
 
 <script>
+import Header from '~/components/Header.vue'
+
 export default {
   data() {
     return {
@@ -67,10 +60,10 @@ export default {
       newValuation: '',
     }
   },
+  components: {
+    Header: Header,
+  },
   methods: {
-    login() {
-      this.$store.dispatch('login')
-    },
     addCard() {
       const title = this.newTitle
       const formula = {

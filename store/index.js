@@ -4,9 +4,9 @@ const db = firebase.firestore();
 const cardRef = db.collection('cards')
 
 export const state = () => ({
- userUid: '',
- userName: '',
- cards: []
+  userUid: '',
+  userName: '',
+  cards: []
 })
 
 export const mutations = {
