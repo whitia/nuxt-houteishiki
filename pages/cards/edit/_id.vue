@@ -2,7 +2,8 @@
   <div>
     <Header />
 
-    <div class="container">
+    <div class="container" style="position:relative;">
+      <div class="loading"></div>
       <b-form @submit.prevent="updateCard" enctype="multipart/form-data">
         <div class="row justify-content-center">
           <div class="col-12 col-sm-8">
@@ -64,7 +65,7 @@
         </div>
         <div class="row justify-content-center mt-4">
           <div class="col-12 col-sm-2">
-            <b-button block type="submit" variant="faded">編集</b-button>
+            <b-button block type="submit" variant="outline-secondary">編集</b-button>
           </div>
         </div>
       </b-form>
@@ -91,6 +92,8 @@ export default {
   },
   methods: {
     updateCard(e) {
+      document.querySelector('.loading').style.display = 'block';
+
       const target = this.$route.params.card.id
       const title = e.target.title.value
       const formula = {

@@ -14,9 +14,9 @@
             <b-card
               :img-src="card.image"
               img-top
-              img-height="200"
+              img-height="180"
               tag="card"
-              class="mb-5 text-center shadow-sm"
+              class="mb-5 text-center"
             >
               <b-card-title>{{ card.title }}</b-card-title>
               <b-card-text>
@@ -49,7 +49,7 @@ export default {
   mounted() {
     this.$nextTick(() => {
       this.$nuxt.$loading.start()
-      setTimeout(() => this.$nuxt.$loading.finish(), 5000)
+      setTimeout(() => {this.$nuxt.$loading.finish()}, 1000)
     })
   }
 }

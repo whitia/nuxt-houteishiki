@@ -1,5 +1,5 @@
 $font-color: #747474;
-$bg-color: #d3d3d3;
+$bg-color: #e4e4e4;
 
 body {
   color: $font-color;
@@ -8,45 +8,53 @@ body {
 }
 a {
   color: $font-color;
+  transition: all 0.5s;
 }
 a:hover {
   color: $font-color;
   text-decoration: none;
+  opacity: 0.5;
 }
 
-.btn-link {
-  color: $font-color;
-  font-size: small;
-  padding: 0;
-}
-.btn-link:hover {
-  color: $font-color;
-  text-decoration: none;
-}
-
-.header {
-  background-color: $bg-color;
+.loading {
+  background-color: rgba(255, 255, 255, 0.4);
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 100;
+  display: none;
 }
 
 $darken-color: #a8a8a8;
-.btn {
-  color: $font-color;
-  font-size: 8px;
-  padding: 8px;
-  border: 1px solid $darken-color;
-  transition: all 0.5s;
-  background-color: #fff;
-  img {
-    background-color: transparent;
-    border-right: 1px solid $darken-color;
-    padding: 0;
-    padding-right: 8px;
-    margin-right: 8px;
+.header {
+  background-color: $bg-color;
+  .navbar-brand {
+    font-size: 24px;
+    color: $font-color;
+    transition: all 0.5s;
   }
-}
-.btn:hover {
-  color: #fff;
-  background-color: $darken-color;
+  .navbar-brand:hover {
+    opacity: 0.5;
+  }
+  .login-button {
+    color: $font-color;
+    font-size: 8px;
+    padding: 8px;
+    border: 1px solid $darken-color;
+    transition: all 0.5s;
+    background-color: #fff;
+    img {
+      background-color: transparent;
+      border-right: 1px solid $darken-color;
+      padding: 0;
+      padding-right: 8px;
+      margin-right: 8px;
+    }
+  }
+  .login-button:hover {
+    color: #fff;
+    background-color: $darken-color;
+  }
 }
 
 .card {
@@ -55,6 +63,13 @@ $darken-color: #a8a8a8;
 a:hover .card {
   transform: scale(1.05);
   box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+}
+
+.position-top-right {
+  font-size: 12px;
+  position: absolute;
+  top: 0;
+  right: 0;
 }
 
 /* Sticky footer styles
