@@ -7,7 +7,7 @@
       </b-navbar-brand>
       <b-navbar-nav class="ml-auto">
 
-        <template v-if="$store.getters.getUserName === ''">
+        <template v-if="$store.getters.getUser.uid === null">
           <b-button size="sm" variant="white" @click="login" class="login-button">
             <img src="https://img.icons8.com/color/16/000000/google-logo.png">
             Google アカウントでサインイン
@@ -16,7 +16,7 @@
         <template v-else>
           <b-nav-item-dropdown right>
             <template v-slot:button-content>
-              {{ $store.getters.getUserName }}
+              {{ $store.getters.getUser.name }}
             </template>
             <b-dropdown-item to="/cards/create">新規投稿</b-dropdown-item>
             <b-dropdown-item href="#">サインアウト</b-dropdown-item>
@@ -33,11 +33,9 @@ export default {
   methods: {
     login() {
       this.$store.dispatch('login')
-        .then((uid, displayName) => {
-          localStorage.setItem('UserUid', uid)
-          localStorage.setItem('UserName', displayName)
+        .then(() => {
         })
-    },
-  },
+    }
+  }
 }
 </script>

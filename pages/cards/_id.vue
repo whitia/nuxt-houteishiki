@@ -57,8 +57,7 @@ export default {
 
       document.querySelector('.loading').style.display = 'block';
 
-      const target = this.$route.params.card.id
-      this.$store.dispatch('deleteCard', { target })
+      this.$store.dispatch('deleteCard', { card: this.card })
         .then(() => {
           setTimeout(() => {
             this.$router.push('/')
@@ -66,11 +65,8 @@ export default {
         })
     },
     likeCard() {
-      const target = this.$route.params.card.id
-      const like = this.$route.params.card.like
-      this.$store.dispatch('likeCard', { target, like })
+      this.$store.dispatch('likeCard', { card: this.card })
         .then(res => {
-          this.card.like = res
         })
     }
   }

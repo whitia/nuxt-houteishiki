@@ -21,7 +21,7 @@
             <div class="position-relative">
               <div class="position-top-left">
                 <img src="https://img.icons8.com/officel/20/000000/hearts.png" class="like"
-                     @click.prevent="likeCard()" v-bind:class="{ grayscale: !card.like }" />
+                     @click.prevent="likeCard(card)" v-bind:class="{ grayscale: !card.like }" />
               </div>
             </div>
               <b-card-title>{{ card.title }}</b-card-title>
@@ -59,12 +59,10 @@ export default {
     })
   },
   methods: {
-    likeCard() {
-      const target = this.$route.params.card.id
-      const like = this.$route.params.card.like
-      this.$store.dispatch('likeCard', { target, like })
+    likeCard(card) {
+      this.$store.dispatch('likeCard', { card })
         .then(res => {
-          this.card.like = res
+          this.$store.commit('updateCardLike', card)
         })
     }
   }
