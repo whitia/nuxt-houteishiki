@@ -111,7 +111,7 @@ export default {
           this.$store.dispatch('updateCard', { target, id, title, formula, image })
             .then(() => {
               setTimeout(() => {
-                window.location.href ="/"
+                this.$router.push('/')
               }, 1000)
             })
         })

@@ -57,7 +57,7 @@ export default {
       this.$store.dispatch('deleteCard', { target })
         .then(() => {
           setTimeout(() => {
-            window.location.href ="/"
+            this.$router.push('/')
           }, 1000)
         })
     }
