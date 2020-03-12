@@ -67,6 +67,7 @@ export default {
     likeCard() {
       this.$store.dispatch('likeCard', { card: this.card })
         .then(res => {
+          this.$store.commit('updateCardLike', this.card)
         })
     }
   }
