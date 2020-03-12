@@ -6,6 +6,7 @@
         みんなの方程式
       </b-navbar-brand>
       <b-navbar-nav class="ml-auto">
+
         <template v-if="$store.getters.getUserName === ''">
           <b-button size="sm" variant="white" @click="login" class="login-button">
             <img src="https://img.icons8.com/color/16/000000/google-logo.png">
@@ -17,10 +18,11 @@
             <template v-slot:button-content>
               {{ $store.getters.getUserName }}
             </template>
-            <b-dropdown-item to="/cards">Dashboard</b-dropdown-item>
-            <b-dropdown-item href="#">Sign Out</b-dropdown-item>
+            <b-dropdown-item to="/cards/create">新規投稿</b-dropdown-item>
+            <b-dropdown-item href="#">サインアウト</b-dropdown-item>
           </b-nav-item-dropdown>
         </template>
+
       </b-navbar-nav>
     </div>
   </b-navbar>
