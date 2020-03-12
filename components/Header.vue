@@ -6,7 +6,7 @@
       </b-navbar-brand>
       <b-navbar-nav class="ml-auto">
         <template v-if="$store.getters.getUserName === ''">
-          <b-button size="sm" variant="white" @click="login" class="login-button">
+          <b-button size="sm" variant="white" @click="login" class="btn">
             <img src="https://img.icons8.com/color/16/000000/google-logo.png">
             Google アカウントでサインイン
           </b-button>

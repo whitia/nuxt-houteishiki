@@ -1,10 +1,10 @@
 $font-color: #747474;
-$bg-color: #e1fff6;
+$bg-color: #d3d3d3;
 
 body {
   color: $font-color;
   background-color: #fff;
-  //font-family: 'Kosugi Maru', sans-serif;
+  font-family: 'M PLUS Rounded 1c', sans-serif;
 }
 a {
   color: $font-color;
@@ -14,26 +14,39 @@ a:hover {
   text-decoration: none;
 }
 
+.btn-link {
+  color: $font-color;
+  font-size: small;
+  padding: 0;
+}
+.btn-link:hover {
+  color: $font-color;
+  text-decoration: none;
+}
+
 .header {
   background-color: $bg-color;
-  .login-button {
-    font-size: 8px;
+}
+
+$darken-color: #a8a8a8;
+.btn {
+  color: $font-color;
+  font-size: 8px;
+  padding: 8px;
+  border: 1px solid $darken-color;
+  transition: all 0.5s;
+  background-color: #fff;
+  img {
+    background-color: transparent;
+    border-right: 1px solid $darken-color;
     padding: 0;
     padding-right: 8px;
-    border: 1px solid #aaa;
-    transition: all 0.5s;
-    background-color: #fff;
-    img {
-      background-color: #fff;
-      border-right: 1px solid #aaa;
-      padding: 8px;
-      margin-right: 8px;
-    }
+    margin-right: 8px;
   }
-  .login-button:hover {
-    color: #fff;
-    background-color: #aaa;
-  }
+}
+.btn:hover {
+  color: #fff;
+  background-color: $darken-color;
 }
 
 .card {

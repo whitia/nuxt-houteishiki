@@ -98,6 +98,22 @@ export const actions = {
         })
       })
   },
+  deleteCard({ commit }, card) {
+    cardRef.where('id', '==', card.target).get()
+      .then(snapshot => {
+        snapshot.forEach(doc => {
+          cardRef
+            .doc(doc.id)
+            .delete()
+              .then(docRef => {
+                commit('clearCard', card)
+              })
+              .catch(error => {
+                console.error('An error occurred in deleteCard(): ', error)
+              })
+        })
+      })
+  }
 }
 
 export const mutations = {

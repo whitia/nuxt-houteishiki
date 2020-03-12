@@ -57,13 +57,14 @@
               accept="image"
               id="image"
               class="mt-3"
+              required
               plain
             ></b-form-file>
           </div>
         </div>
         <div class="row justify-content-center mt-4">
           <div class="col-12 col-sm-2">
-            <b-button block type="submit" variant="dark">新規投稿</b-button>
+            <b-button block type="submit" variant="faded">新規投稿</b-button>
           </div>
         </div>
       </b-form>
@@ -112,15 +113,11 @@ export default {
       })
         .then(image => {
           this.$store.dispatch('addCard', { id, title, formula, image })
-          this.card = {
-            title: null,
-            formula: {
-              value_1: null,
-              value_2: null,
-              valuation: null,
-            },
-            image: null
-          }
+            .then(() => {
+              setTimeout(() => {
+                window.location.href ="/"
+              }, 1000)
+            })
         })
     }
   },

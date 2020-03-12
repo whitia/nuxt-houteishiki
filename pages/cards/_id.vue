@@ -12,7 +12,10 @@
             class="text-center shadow-sm"
           >
             <div class="float-right small">
-              <nuxt-link :to="{ name: 'cards-edit-id', params: { id: card.id, card: card } }">編集</nuxt-link>
+              <nuxt-link :to="{ name: 'cards-edit-id', params: { id: card.id, card: card } }">編集</nuxt-link> /
+              <b-form @submit.prevent="deleteCard" class="d-inline">
+                <b-button type="submit" variant="link">削除</b-button>
+              </b-form>
             </div>
             <b-card-title>{{ card.title }}</b-card-title>
             <b-card-text>
@@ -41,6 +44,17 @@ export default {
   data: function() {
     return {
       card: this.$route.params.card
+    }
+  },
+  methods: {
+    deleteCard() {
+      const target = this.$route.params.card.id
+      this.$store.dispatch('deleteCard', { target })
+        .then(() => {
+          setTimeout(() => {
+            window.location.href ="/"
+          }, 1000)
+        })
     }
   }
 }
