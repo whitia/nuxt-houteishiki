@@ -30,73 +30,71 @@ export const actions = {
   },
   fetchCards({ commit }) {
     commit('clearCard')
-    cardRef
-      .orderBy('created_at', 'desc')
-      .get()
-        .then(res => {
-          res.forEach((doc) => {
-            commit('addCard', doc.data());
-          })
+    cardRef.orderBy('created_at', 'desc').get()
+      .then(res => {
+        res.forEach((doc) => {
+          commit('addCard', doc.data());
         })
-        .catch(error => {
-          console.error('An error occurred in fetchCards(): ', error)
-        })
+      })
+      .catch(error => {
+        console.error('An error occurred in fetchCards(): ', error)
+      })
   },
   uploadImage({ commit }, image) {
     return new Promise((resolve, reject) => {
-      const uploadTask = firestorage
-        .ref('images/' + image.name)
-        .put(image.file)
-          .then(snapshot => {
-            snapshot.ref.getDownloadURL()
-              .then(url => {
-                resolve(url)
-              })
-              .catch(error => {
-                console.error(error)
-              })
-          })
-          .catch(error => {
-            console.error('An error occurred in uploadImage(): ', error)
-          })
+      firestorage.ref('images/' + image.name).put(image.file)
+        .then(snapshot => {
+          snapshot.ref.getDownloadURL()
+            .then(url => {
+              resolve(url)
+            })
+            .catch(error => {
+              console.error(error)
+            })
+        })
+        .catch(error => {
+          console.error('An error occurred in uploadImage(): ', error)
+        })
     })
   },
   addCard({ commit }, card) {
-    cardRef
-      .add({
-        id: card.id,
-        title: card.title,
-        formula: card.formula,
-        image: card.image,
-        created_at: firebase.firestore.FieldValue.serverTimestamp(),
-        updated_at: firebase.firestore.FieldValue.serverTimestamp()
+    const item = {
+      id: card.id,
+      title: card.title,
+      formula: card.formula,
+      image: card.image,
+      like: 0,
+      created_at: firebase.firestore.FieldValue.serverTimestamp(),
+      updated_at: firebase.firestore.FieldValue.serverTimestamp()
+    }
+
+    cardRef.add(item)
+      .then(docRef => {
+        commit('addCard', card)
       })
-        .then(docRef => {
-          commit('addCard', card)
-        })
-        .catch(error => {
-          console.error('An error occurred in addCard(): ', error)
-        })
+      .catch(error => {
+        console.error('An error occurred in addCard(): ', error)
+      })
   },
   updateCard({ commit }, card) {
     cardRef.where('id', '==', card.target).get()
       .then(snapshot => {
         snapshot.forEach(doc => {
-          cardRef
-            .doc(doc.id)
-            .update({
-              id: card.id,
-              title: card.title,
-              formula: card.formula,
-              image: card.image,
-              updated_at: firebase.firestore.FieldValue.serverTimestamp()
+          const item = {
+            id: card.id,
+            title: card.title,
+            formula: card.formula,
+            image: card.image,
+            updated_at: firebase.firestore.FieldValue.serverTimestamp()
+          }
+
+          cardRef.doc(doc.id).update(item)
+            .then(docRef => {
+              commit('addCard', card)
             })
-              .then(docRef => {
-                commit('addCard', card)
-              })
-              .catch(error => {
-                console.error('An error occurred in addCard(): ', error)
-              })
+            .catch(error => {
+              console.error('An error occurred in addCard(): ', error)
+            })
         })
       })
   },
@@ -104,18 +102,32 @@ export const actions = {
     cardRef.where('id', '==', card.target).get()
       .then(snapshot => {
         snapshot.forEach(doc => {
-          cardRef
-            .doc(doc.id)
-            .delete()
-              .then(docRef => {
-                commit('clearCard', card)
-              })
-              .catch(error => {
-                console.error('An error occurred in deleteCard(): ', error)
-              })
+          cardRef.doc(doc.id).delete()
+            .then(docRef => {
+              commit('clearCard', card)
+            })
+            .catch(error => {
+              console.error('An error occurred in deleteCard(): ', error)
+            })
         })
       })
-  }
+  },
+  likeCard({ commit }, card) {
+    return new Promise((resolve, reject) => {
+      cardRef.where('id', '==', card.target).get()
+        .then(snapshot => {
+          snapshot.forEach(doc => {
+            cardRef.doc(doc.id).update({ like: card.like + 1 })
+              .then(docRef => {
+                resolve(card.like + 1)
+              })
+              .catch(error => {
+                console.error('An error occurred in likeCard(): ', error)
+              })
+          })
+        })
+      })
+  },
 }
 
 export const mutations = {

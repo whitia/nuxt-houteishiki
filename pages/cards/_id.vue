@@ -13,6 +13,10 @@
             class="text-center"
           >
             <div class="position-relative">
+              <div class="position-top-left">
+                <img src="https://img.icons8.com/officel/20/000000/hearts.png" class="like"
+                     @click.prevent="likeCard()" v-bind:class="{ grayscale: !card.like }" />
+              </div>
               <div class="position-top-right">
                 <nuxt-link :to="{ name: 'cards-edit-id', params: { id: card.id, card: card } }">編集</nuxt-link> /
                 <a href="#" @click.prevent="deleteCard()">削除</a>
@@ -59,6 +63,14 @@ export default {
           setTimeout(() => {
             this.$router.push('/')
           }, 1000)
+        })
+    },
+    likeCard() {
+      const target = this.$route.params.card.id
+      const like = this.$route.params.card.like
+      this.$store.dispatch('likeCard', { target, like })
+        .then(res => {
+          this.card.like = res
         })
     }
   }

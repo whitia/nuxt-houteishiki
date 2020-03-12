@@ -18,6 +18,12 @@
               tag="card"
               class="mb-5 text-center"
             >
+            <div class="position-relative">
+              <div class="position-top-left">
+                <img src="https://img.icons8.com/officel/20/000000/hearts.png" class="like"
+                     @click.prevent="likeCard()" v-bind:class="{ grayscale: !card.like }" />
+              </div>
+            </div>
               <b-card-title>{{ card.title }}</b-card-title>
               <b-card-text>
                 {{ card.formula.value_1 }} ×
@@ -49,8 +55,18 @@ export default {
   mounted() {
     this.$nextTick(() => {
       this.$nuxt.$loading.start()
-      setTimeout(() => {this.$nuxt.$loading.finish()}, 1000)
+      setTimeout(() => {this.$nuxt.$loading.finish()}, 5000)
     })
+  },
+  methods: {
+    likeCard() {
+      const target = this.$route.params.card.id
+      const like = this.$route.params.card.like
+      this.$store.dispatch('likeCard', { target, like })
+        .then(res => {
+          this.card.like = res
+        })
+    }
   }
 }
 </script>
