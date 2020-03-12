@@ -33,6 +33,10 @@ export default {
   methods: {
     login() {
       this.$store.dispatch('login')
+        .then((uid, displayName) => {
+          localStorage.setItem('UserUid', uid)
+          localStorage.setItem('UserName', displayName)
+        })
     },
   },
 }

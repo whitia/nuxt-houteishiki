@@ -14,16 +14,19 @@ export const state = () => ({
 
 export const actions = {
   login({ commit }) {
-    const provider = new firebase.auth.GoogleAuthProvider();
-    firebase.auth().signInWithPopup(provider)
-      .then(result => {
-        const user = result.user;
-        commit('setUserUid', user.uid)
-        commit('setUserName', user.displayName)
-      })
-      .catch(error => {
-        console.error('An error occurred in login(): ', error)
-      });
+    return new Promise((resolve, reject) => {
+      const provider = new firebase.auth.GoogleAuthProvider();
+      firebase.auth().signInWithPopup(provider)
+        .then(result => {
+          const user = result.user;
+          commit('setUserUid', user.uid)
+          commit('setUserName', user.displayName)
+          resolve(user.uid, user.displayName)
+        })
+        .catch(error => {
+          console.error('An error occurred in login(): ', error)
+        });
+    });
   },
   fetchCards({ commit }) {
     commit('clearCard')
