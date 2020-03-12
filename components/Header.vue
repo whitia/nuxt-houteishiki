@@ -1,7 +1,7 @@
 <template>
   <b-navbar variant="faded" type="light" class="header mb-5">
     <div class="container px-3">
-      <b-navbar-brand href="/">
+      <b-navbar-brand to="/">
         <img src="https://img.icons8.com/cotton/32/000000/cat--v2.png">
         みんなの方程式
       </b-navbar-brand>

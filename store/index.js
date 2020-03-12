@@ -32,7 +32,6 @@ export const actions = {
     commit('clearCard')
     cardRef
       .orderBy('created_at', 'desc')
-      .limit(9)
       .get()
         .then(res => {
           res.forEach((doc) => {
