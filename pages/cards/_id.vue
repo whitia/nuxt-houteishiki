@@ -57,6 +57,8 @@ export default {
 
       document.querySelector('.loading').style.display = 'block';
 
+      this.$store.dispatch('deleteFile', { name: this.card.id })
+
       this.$store.dispatch('deleteCard', { card: this.card })
         .then(() => {
           setTimeout(() => {

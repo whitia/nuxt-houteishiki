@@ -11,7 +11,8 @@ export const state = () => ({
     uid: null,
     name: null
   },
-  cards: []
+  cards: [],
+  items: []
 })
 
 export const actions = {
@@ -142,6 +143,39 @@ export const actions = {
         })
       })
   },
+  listFile({ commit }, payload) {
+    commit('clearItems')
+
+    return new Promise((resolve, reject) => {
+      firestorage.ref('images/').listAll()
+        .then(snapshot => {
+          snapshot.items.forEach(item => {
+            console.log()
+            item.getDownloadURL()
+              .then(url => {
+                commit('addItem', { name: item.name, url: url })
+              })
+          })
+          resolve(true)
+        })
+        .catch(error => {
+          console.log('An error occurred in listFile(): ', error)
+          reject(error)
+        })
+    })
+  },
+  deleteFile({ commit }, payload) {
+    return new Promise((resolve, reject) => {
+      firestorage.ref('images/').child(payload.name).delete()
+        .then(() => {
+          resolve(true)
+        })
+        .catch(error => {
+          console.log('An error occurred in deleteFile(): ', error)
+          reject(error)
+        })
+    })
+  }
 }
 
 export const mutations = {
@@ -149,20 +183,32 @@ export const mutations = {
     state.user.uid = user.uid
     state.user.name = user.displayName
   },
-  addCard(state, card) {
-    state.cards.push(card)
+  addCard(state, cards) {
+    state.cards.push(cards)
   },
   clearCard(state) {
     state.cards = []
   },
   updateCardLike(state, payload) {
-    console.log(payload)
     state.cards.forEach(card => {
-      if (card.id === payload.id) {
-        console.log(card)
+      if (card.id === payload.card.id) {
         card.like = card.like + 1
       }
     })
+  },
+  addItem(state, item) {
+    state.items.push(item)
+  },
+  deleteItem(state, payload) {
+    state.items.some((item, index) => {
+      if (item.name === payload.name) {
+        state.items.splice(index, 1)
+        return true
+      }
+    })
+  },
+  clearItems(state) {
+    state.items = []
   }
 }
 
@@ -172,5 +218,8 @@ export const getters = {
   },
   getCards(state) {
     return state.cards
+  },
+  getItems(state) {
+    return state.items
   }
 }
