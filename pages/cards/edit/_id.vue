@@ -93,6 +93,8 @@ export default {
     console.log(this.$store.getters.getUser.uid)
     if (!this.$store.getters.getUser.uid) {
       this.$router.push('/')
+    } else if (this.$store.getters.getUser.uid !== this.card.user.uid) {
+      this.$router.push('/')
     }
   },
   methods: {

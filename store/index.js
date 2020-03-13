@@ -12,6 +12,7 @@ export const state = () => ({
     name: null
   },
   cards: [],
+  userCards: [],
   items: []
 })
 
@@ -38,6 +39,24 @@ export const actions = {
         .then(res => {
           res.forEach((doc) => {
             commit('addCard', doc.data())
+            resolve(true)
+          })
+        })
+        .catch(error => {
+          console.error('An error occurred in fetchCards(): ', error)
+          reject(error)
+        })
+    })
+  },
+  fetchUserCards({ commit }, payload) {
+    commit('clearUserCards')
+
+    return new Promise((resolve, reject) => {
+      cardRef.where('user.uid', '==', payload.user.uid)
+             .orderBy('created_at', 'desc').limit(payload.limit).get()
+        .then(res => {
+          res.forEach((doc) => {
+            commit('addUserCard', doc.data())
             resolve(true)
           })
         })
@@ -158,7 +177,6 @@ export const actions = {
       firestorage.ref('images/').listAll()
         .then(snapshot => {
           snapshot.items.forEach(item => {
-            console.log()
             item.getDownloadURL()
               .then(url => {
                 commit('addItem', { name: item.name, url: url })
@@ -194,15 +212,35 @@ export const mutations = {
   addCard(state, cards) {
     state.cards.push(cards)
   },
+  addUserCard(state, cards) {
+    state.userCards.push(cards)
+  },
   clearCard(state) {
     state.cards = []
   },
+  clearUserCards(state) {
+    state.userCards = []
+  },
   updateCardLike(state, payload) {
-    state.cards.forEach(card => {
+    state.cards.some(card => {
       if (card.id === payload.card.id) {
         card.like = card.like + 1
+        return true
       }
     })
+  },
+  updateUserCards(state, payload) {
+    state.userCards.some((userCard, index) => {
+      if (userCard.id === payload.card.id) {
+        state.userCards.splice(index, 1)
+        return true
+      }
+    })
+
+    console.log(state.userCards.length)
+    if (state.userCards.length > payload.max) {
+      state.userCards.splice(payload.max)
+    }
   },
   addItem(state, item) {
     state.items.push(item)
@@ -226,6 +264,9 @@ export const getters = {
   },
   getCards(state) {
     return state.cards
+  },
+  getUserCards(state) {
+    return state.userCards
   },
   getItems(state) {
     return state.items

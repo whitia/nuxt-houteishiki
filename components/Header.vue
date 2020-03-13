@@ -44,6 +44,8 @@ export default {
         .then(() => {
           this.$localStorage.set('user_uid', this.$store.getters.getUser.uid)
           this.$localStorage.set('user_name', this.$store.getters.getUser.name)
+
+          this.$router.push('/')
         })
     },
     logout() {
@@ -51,6 +53,8 @@ export default {
       this.$localStorage.remove('user_name')
 
       this.$store.commit('setUser', { uid: null, displayName: null })
+
+      this.$router.push('/')
     }
   }
 }

@@ -5,7 +5,7 @@
     <div class="container position-relative">
       <div class="loading"></div>
       <div class="row justify-content-center">
-        <div class="col-12 col-sm-8">
+        <div class="col-12 col-sm-9">
           <b-card
             :img-src="card.image"
             img-top
@@ -17,9 +17,9 @@
                 <img src="https://img.icons8.com/officel/20/000000/hearts.png" class="like"
                      @click.prevent="likeCard()" v-bind:class="{ grayscale: !card.like }" />
                 <br />
-                <span class="small">{{ card.like }}</span>
+                <span class="small" v-if="card.like">{{ card.like }}</span>
               </div>
-              <div class="position-top-right" v-if="$store.getters.getUser.uid">
+              <div class="position-top-right" v-if="auth">
                 <nuxt-link :to="{ name: 'cards-edit-id', params: { id: card.id, card: card } }">編集</nuxt-link> /
                 <a href="#" @click.prevent="deleteCard()">削除</a>
               </div>
@@ -31,6 +31,29 @@
               {{ card.formula.valuation }}
             </b-card-text>
           </b-card>
+          <div class="row my-5">
+            <div class="col-12 mb-3">
+              <h4>{{ this.$store.getters.getUser.name }} の他のカード</h4>
+            </div>
+            <div class="col-12 col-sm-4" v-for="(card,key) in $store.getters.getUserCards" v-bind:key="key">
+              <nuxt-link :to="{ name: 'cards-id', params: { id: card.id, card: card } }">
+                <b-card
+                  :img-src="card.image"
+                  img-top
+                  img-height="130"
+                  tag="card"
+                  class="mb-4 text-center small"
+                >
+                  <b-card-title>{{ card.title }}</b-card-title>
+                  <b-card-text>
+                    {{ card.formula.value_1 }} ×
+                    {{ card.formula.value_2 }} ＝
+                    {{ card.formula.valuation }}
+                  </b-card-text>
+                </b-card>
+              </nuxt-link>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -50,8 +73,23 @@ export default {
   },
   data: function() {
     return {
-      card: this.$route.params.card
+      card: this.$route.params.card,
+      auth: false
     }
+  },
+  created() {
+    const user = this.$store.getters.getUser
+    const card = this.$route.params.card
+    const max = 3
+
+    if (user.uid === this.card.user.uid) {
+      this.auth = true;
+    }
+
+    this.$store.dispatch('fetchUserCards', { user, limit: max + 1 })
+      .then(() => {
+        this.$store.commit('updateUserCards', { card, max })
+      })
   },
   methods: {
     deleteCard() {
