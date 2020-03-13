@@ -1,5 +1,5 @@
 <template>
-  <b-navbar variant="faded" type="light" class="header mb-5">
+  <b-navbar sticky variant="faded" type="light" class="header mb-5">
     <div class="container px-3">
       <b-navbar-brand to="/">
         <img src="https://img.icons8.com/cotton/32/000000/cat--v2.png">
@@ -19,6 +19,7 @@
               {{ $store.getters.getUser.name }}
             </template>
             <b-dropdown-item to="/cards/create">新規投稿</b-dropdown-item>
+            <b-dropdown-item to="/user">投稿一覧</b-dropdown-item>
             <b-dropdown-item href="#" @click.prevent="logout()">ログアウト</b-dropdown-item>
           </b-nav-item-dropdown>
         </template>
@@ -31,7 +32,7 @@
 <script>
 export default {
   mounted() {
-    const user ={
+    const user = {
       uid: this.$localStorage.get('user_uid', null),
       displayName: this.$localStorage.get('user_name', null)
     }

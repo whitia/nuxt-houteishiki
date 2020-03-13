@@ -2,7 +2,7 @@
   <div>
     <Header />
 
-    <div class="container position-relative">
+    <div class="container" style="position:relative;">
       <div class="loading"></div>
       <div class="row justify-content-center">
         <div class="col-12 col-sm-9">

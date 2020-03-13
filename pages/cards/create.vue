@@ -132,7 +132,7 @@ export default {
           this.$store.dispatch('addCard', card)
             .then(() => {
               setTimeout(() => {
-                this.$router.push('/')
+                this.$router.push('/user')
               }, 1000)
             })
         })
