@@ -98,6 +98,12 @@ export default {
       }
     }
   },
+  created() {
+    console.log(this.$store.getters.getUser.uid)
+    if (!this.$store.getters.getUser.uid) {
+      this.$router.push('/')
+    }
+  },
   methods: {
     addCard() {
       document.querySelector('.loading').style.display = 'block';

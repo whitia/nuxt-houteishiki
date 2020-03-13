@@ -16,8 +16,10 @@
               <div class="position-top-left">
                 <img src="https://img.icons8.com/officel/20/000000/hearts.png" class="like"
                      @click.prevent="likeCard()" v-bind:class="{ grayscale: !card.like }" />
+                <br />
+                <span class="small">{{ card.like }}</span>
               </div>
-              <div class="position-top-right">
+              <div class="position-top-right" v-if="$store.getters.getUser.uid">
                 <nuxt-link :to="{ name: 'cards-edit-id', params: { id: card.id, card: card } }">編集</nuxt-link> /
                 <a href="#" @click.prevent="deleteCard()">削除</a>
               </div>
@@ -67,10 +69,8 @@ export default {
         })
     },
     likeCard() {
+      this.$store.commit('updateCardLike', { card: this.card })
       this.$store.dispatch('likeCard', { card: this.card })
-        .then(res => {
-          this.$store.commit('updateCardLike', this.card)
-        })
     }
   }
 }

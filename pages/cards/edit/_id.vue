@@ -89,6 +89,12 @@ export default {
       card: this.$route.params.card
     }
   },
+  created() {
+    console.log(this.$store.getters.getUser.uid)
+    if (!this.$store.getters.getUser.uid) {
+      this.$router.push('/')
+    }
+  },
   methods: {
     updateCard(e) {
       document.querySelector('.loading').style.display = 'block';

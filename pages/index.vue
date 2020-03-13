@@ -17,6 +17,8 @@
               <div class="position-top-left">
                 <img src="https://img.icons8.com/officel/20/000000/hearts.png" class="like"
                      @click.prevent="likeCard(card)" v-bind:class="{ grayscale: !card.like }" />
+                <br />
+                <span class="small" v-if="card.like">{{ card.like }}</span>
               </div>
             </div>
               <b-card-title>{{ card.title }}</b-card-title>
@@ -55,10 +57,8 @@ export default {
   },
   methods: {
     likeCard(card) {
+      this.$store.commit('updateCardLike', { card })
       this.$store.dispatch('likeCard', { card })
-        .then(res => {
-          this.$store.commit('updateCardLike', { card })
-        })
     }
   }
 }
