@@ -57,7 +57,6 @@
               accept="image"
               id="image"
               class="mt-3"
-              required
               plain
             ></b-form-file>
             <img :src="card.image" class="img-fluid" />
@@ -94,28 +93,45 @@ export default {
     updateCard(e) {
       document.querySelector('.loading').style.display = 'block';
 
-      const target = this.$route.params.card.id
-      const title = e.target.title.value
-      const formula = {
-        value_1: e.target.value_1.value,
-        value_2: e.target.value_2.value,
-        valuation: e.target.valuation.value
+      let card = {
+        old_id: this.$route.params.card.id,
+        new_id: uuidv4(),
+        user: {
+          uid: this.$localStorage.get('user_uid'),
+          name: this.$localStorage.get('user_name')
+        },
+        title: e.target.title.value,
+        formula: {
+          value_1: e.target.value_1.value,
+          value_2: e.target.value_2.value,
+          valuation: e.target.valuation.value
+        },
+        image: e.target.image.files[0]
       }
 
-      const id = uuidv4()
-      this.$store.dispatch('uploadImage', {
-        name: id,
-        file: e.target.image.files[0]
-      })
-        .then(image => {
-          this.$store.dispatch('updateCard', { target, id, title, formula, image })
-            .then(() => {
-              setTimeout(() => {
-                this.$router.push('/')
-              }, 1000)
-            })
+      if (card.image) {
+        this.$store.dispatch('uploadImage', {
+          name: card.new_id,
+          file: card.image
         })
+          .then(image => {
+            this.$store.dispatch('updateCard', card)
+              .then(() => {
+                setTimeout(() => {
+                  this.$router.push('/')
+                }, 1000)
+              })
+          })
+      } else {
+        card.image = this.$route.params.card.image
+        this.$store.dispatch('updateCard', card)
+          .then(() => {
+            setTimeout(() => {
+              this.$router.push('/')
+            }, 1000)
+          })
+      }
     }
-  },
+  }
 }
 </script>

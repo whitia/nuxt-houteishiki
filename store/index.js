@@ -65,6 +65,10 @@ export const actions = {
   addCard({ commit }, card) {
     const item = {
       id: card.id,
+      user: {
+        uid: card.user.uid,
+        name: card.user.name
+      },
       title: card.title,
       formula: card.formula,
       image: card.image,
@@ -86,11 +90,15 @@ export const actions = {
   },
   updateCard({ commit }, card) {
     return new Promise((resolve, reject) => {
-      cardRef.where('id', '==', card.target).get()
+      cardRef.where('id', '==', card.old_id).get()
         .then(snapshot => {
           snapshot.forEach(doc => {
             const item = {
-              id: card.id,
+              id: card.new_id,
+              user: {
+                uid: card.user.uid,
+                name: card.user.name
+              },
               title: card.title,
               formula: card.formula,
               image: card.image,

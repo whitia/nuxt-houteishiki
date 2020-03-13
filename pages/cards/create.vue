@@ -102,20 +102,28 @@ export default {
     addCard() {
       document.querySelector('.loading').style.display = 'block';
 
-      const title = this.card.title
-      const formula = {
-        value_1: this.card.formula.value_1,
-        value_2: this.card.formula.value_2,
-        valuation: this.card.formula.valuation
+      let card = {
+        id: uuidv4(),
+        user: {
+          uid: this.$localStorage.get('user_uid'),
+          name: this.$localStorage.get('user_name')
+        },
+        title: this.card.title,
+        formula: {
+          value_1: this.card.formula.value_1,
+          value_2: this.card.formula.value_2,
+          valuation: this.card.formula.valuation
+        },
+        image: this.card.image
       }
 
-      const id = uuidv4()
       this.$store.dispatch('uploadImage', {
-        name: id,
-        file: this.card.image
+        name: card.id,
+        file: card.image
       })
         .then(image => {
-          this.$store.dispatch('addCard', { id, title, formula, image })
+          card.image = image
+          this.$store.dispatch('addCard', card)
             .then(() => {
               setTimeout(() => {
                 this.$router.push('/')
