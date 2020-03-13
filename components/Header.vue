@@ -10,7 +10,7 @@
         <template v-if="$store.getters.getUser.uid === null">
           <b-button size="sm" variant="white" @click="login" class="login-button">
             <img src="https://img.icons8.com/color/16/000000/google-logo.png">
-            Google アカウントでサインイン
+            Google アカウントでログイン
           </b-button>
         </template>
         <template v-else>
@@ -19,7 +19,7 @@
               {{ $store.getters.getUser.name }}
             </template>
             <b-dropdown-item to="/cards/create">新規投稿</b-dropdown-item>
-            <b-dropdown-item href="#">サインアウト</b-dropdown-item>
+            <b-dropdown-item href="#" @click.prevent="logout()">ログアウト</b-dropdown-item>
           </b-nav-item-dropdown>
         </template>
 
@@ -30,11 +30,27 @@
 
 <script>
 export default {
+  mounted() {
+    const user ={
+      uid: this.$localStorage.get('user_uid', null),
+      displayName: this.$localStorage.get('user_name', null)
+    }
+
+    this.$store.commit('setUser', user)
+  },
   methods: {
     login() {
       this.$store.dispatch('login')
         .then(() => {
+          this.$localStorage.set('user_uid', this.$store.getters.getUser.uid)
+          this.$localStorage.set('user_name', this.$store.getters.getUser.name)
         })
+    },
+    logout() {
+      this.$localStorage.remove('user_uid')
+      this.$localStorage.remove('user_name')
+
+      this.$store.commit('setUser', { uid: null, displayName: null })
     }
   }
 }

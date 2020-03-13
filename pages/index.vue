@@ -3,11 +3,6 @@
     <Header />
 
     <div class="container">
-      <div class="row mb-4">
-        <div class="col-12">
-          <nuxt-link to="/cards/create">新規投稿</nuxt-link>
-        </div>
-      </div>
       <div class="row">
         <div class="col-12 col-sm-4" v-for="(card,key) in $store.getters.getCards" v-bind:key="key">
           <nuxt-link :to="{ name: 'cards-id', params: { id: card.id, card: card } }">
