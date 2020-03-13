@@ -158,7 +158,7 @@ export const actions = {
       cardRef.where('id', '==', payload.card.id).get()
         .then(snapshot => {
           snapshot.forEach(doc => {
-            cardRef.doc(doc.id).update({ like: payload.card.like + 1 })
+            cardRef.doc(doc.id).update({ like: payload.card.like })
               .then(ref => {
                 resolve(true)
               })
