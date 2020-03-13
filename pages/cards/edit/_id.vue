@@ -90,7 +90,6 @@ export default {
     }
   },
   created() {
-    console.log(this.$store.getters.getUser.uid)
     if (!this.$store.getters.getUser.uid) {
       this.$router.push('/')
     } else if (this.$store.getters.getUser.uid !== this.card.user.uid) {
@@ -123,6 +122,7 @@ export default {
           file: card.image
         })
           .then(image => {
+            card.image = image
             this.$store.dispatch('updateCard', card)
               .then(() => {
                 setTimeout(() => {

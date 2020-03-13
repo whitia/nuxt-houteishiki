@@ -33,7 +33,7 @@
           </b-card>
           <div class="row my-5">
             <div class="col-12 mb-3">
-              <h4>{{ this.card.user.name }} の他のカード</h4>
+              <h4>{{ this.card.user.name }} の他の方程式</h4>
             </div>
             <div class="col-12 col-sm-4" v-for="(card,key) in $store.getters.getUserCards" v-bind:key="key">
               <nuxt-link :to="{ name: 'cards-id', params: { id: card.id, card: card } }">
