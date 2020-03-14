@@ -4,8 +4,8 @@
 
     <div class="container" style="position:relative;">
       <div class="loading"></div>
-      <div class="row justify-content-center">
-        <div class="col-12 col-sm-9" id="content">
+      <div class="row justify-content-center" id="content">
+        <div class="col-12 col-sm-9">
           <b-card
             :img-src="$store.getters.getCardDetail.image"
             img-top

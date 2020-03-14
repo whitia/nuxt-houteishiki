@@ -3,7 +3,7 @@
     <Header />
 
     <div class="container">
-      <div class="row">
+      <div class="row" id="content">
         <div class="col-12 col-sm-4" v-for="(card,key) in $store.getters.getCards" v-bind:key="key">
           <nuxt-link :to="{ name: 'cards-id', params: { id: card.id } }">
             <b-card
@@ -48,6 +48,9 @@ export default {
   },
   created() {
     this.$store.dispatch('fetchCards')
+    .then(() => {
+      document.querySelector('#content').classList.add('visible')
+    })
   },
   mounted() {
     this.$nextTick(() => {
