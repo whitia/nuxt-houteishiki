@@ -288,13 +288,16 @@ export const mutations = {
 
   // カードのLikeインクリメント
   updateCardLike(state, payload) {
-    state.cardDetail.like = state.cardDetail.like + 1
-    // state.cards.some(card => {
-    //   if (card.id === payload.card.id) {
-    //     card.like = card.like + 1
-    //     return true
-    //   }
-    // })
+    if (payload) {
+      state.cards.some(card => {
+        if (card.id === payload.card.id) {
+          card.like = card.like + 1
+          return true
+        }
+      })
+    } else {
+      state.cardDetail.like = state.cardDetail.like + 1
+    }
   },
 
   // ユーザーの他のカード

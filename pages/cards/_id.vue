@@ -113,7 +113,7 @@ export default {
     },
     likeCard() {
       const card = this.$store.getters.getCardDetail
-      this.$store.commit('updateCardLike', { card })
+      this.$store.commit('updateCardLike')
       this.$store.dispatch('likeCard', { card })
     }
   }
