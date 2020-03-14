@@ -48,6 +48,20 @@ export const actions = {
         })
     })
   },
+  fetchCardDetail({ commit }, payload) {
+    return new Promise((resolve, reject) => {
+      cardRef.where('id', '==', payload.id).get()
+        .then(res => {
+          res.forEach((doc) => {
+            resolve(doc.data())
+          })
+        })
+        .catch(error => {
+          console.error('An error occurred in fetchCardDetail(): ', error)
+          reject(error)
+        })
+    })
+  },
   fetchUserCards({ commit }, payload) {
     commit('clearUserCards')
 
@@ -61,7 +75,7 @@ export const actions = {
           })
         })
         .catch(error => {
-          console.error('An error occurred in fetchCards(): ', error)
+          console.error('An error occurred in fetchUserCards(): ', error)
           reject(error)
         })
     })
@@ -237,7 +251,6 @@ export const mutations = {
       }
     })
 
-    console.log(state.userCards.length)
     if (state.userCards.length > payload.max) {
       state.userCards.splice(payload.max)
     }

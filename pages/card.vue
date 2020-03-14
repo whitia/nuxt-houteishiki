@@ -35,7 +35,7 @@
             <div class="col-12 mb-3">
               <h4>{{ this.card.user.name }} の他の方程式</h4>
             </div>
-            <div class="col-12 col-sm-4" v-for="(card,key) in $store.getters.getUserCards" v-bind:key="key">
+            <div class="col-12 col-sm-4" v-for="(card,key) in userCards" v-bind:key="key">
               <nuxt-link :to="{ name: 'cards-id', params: { id: card.id, card: card } }">
                 <b-card
                   :img-src="card.image"
@@ -71,25 +71,26 @@ export default {
     Header: Header,
     Footer: Footer
   },
-  data: function() {
-    return {
-      card: this.$route.params.card,
-      auth: false
-    }
-  },
-  created() {
-    const user = this.$store.getters.getUser
-    const card = this.$route.params.card
+  async asyncData(context) {
+    const id = context.query.id
+    const card = await context.store.dispatch('fetchCardDetail', { id })
+    const user = context.store.getters.getUser
     const max = 3
-
-    if (user.uid === this.card.user.uid) {
-      this.auth = true;
+    const auth = false
+    
+    if (user.id === card.user.uid) {
+      auth = !auth
     }
 
-    this.$store.dispatch('fetchUserCards', { user: card.user, limit: max + 1 })
-      .then(() => {
-        this.$store.commit('updateUserCards', { card, max })
-      })
+    await context.store.dispatch('fetchUserCards', { user: card.user, limit: max + 1 })
+    await context.store.commit('updateUserCards', { card, max })
+    const userCards = context.store.getters.getUserCards
+
+    return {
+      card: card,
+      auth: auth,
+      userCards: userCards
+    }
   },
   methods: {
     deleteCard() {

@@ -5,7 +5,8 @@
     <div class="container">
       <div class="row">
         <div class="col-12 col-sm-4" v-for="(card,key) in $store.getters.getCards" v-bind:key="key">
-          <nuxt-link :to="{ name: 'cards-id', params: { id: card.id, card: card } }">
+          <!-- <nuxt-link :to="{ name: 'cards-id', params: { id: card.id, card: card } }"> -->
+          <nuxt-link :to="`/card?id=${card.id}`">
             <b-card
               :img-src="card.image"
               img-top
