@@ -13,6 +13,23 @@ export const state = () => ({
   },
   cards: [],
   userCards: [],
+  cardDetail: {
+    id: null,
+    title: null,
+    formula: {
+      value_1: null,
+      value_2: null,
+      valuation: null
+    },
+    image: null,
+    user: {
+      uid: null,
+      name: null
+    },
+    created_at: null,
+    updated_at: null
+  },
+  isOwner: false,
   items: []
 })
 
@@ -49,11 +66,14 @@ export const actions = {
     })
   },
   fetchCardDetail({ commit }, payload) {
+    commit('clearCardDetail')
+
     return new Promise((resolve, reject) => {
       cardRef.where('id', '==', payload.id).get()
         .then(res => {
           res.forEach((doc) => {
-            resolve(doc.data())
+            commit('setCardDetail', doc.data())
+            resolve(true)
           })
         })
         .catch(error => {
@@ -219,29 +239,39 @@ export const actions = {
 }
 
 export const mutations = {
+  // ユーザー情報
   setUser(state,user) {
     state.user.uid = user.uid
     state.user.name = user.displayName
   },
+
+  // カード一覧
   addCard(state, cards) {
     state.cards.push(cards)
-  },
-  addUserCard(state, cards) {
-    state.userCards.push(cards)
   },
   clearCard(state) {
     state.cards = []
   },
+
+  // カード詳細
+  setCardDetail(state, card) {
+    state.cardDetail = card
+  },
+  clearCardDetail(state) {
+    state.cards = null
+  },
+
+  // カードの作成者
+  setIsOwner(state, bool) {
+    state.isOwner = bool
+  },
+
+  // ユーザーのカード一覧
+  addUserCard(state, cards) {
+    state.userCards.push(cards)
+  },
   clearUserCards(state) {
     state.userCards = []
-  },
-  updateCardLike(state, payload) {
-    state.cards.some(card => {
-      if (card.id === payload.card.id) {
-        card.like = card.like + 1
-        return true
-      }
-    })
   },
   updateUserCards(state, payload) {
     state.userCards.some((userCard, index) => {
@@ -255,6 +285,18 @@ export const mutations = {
       state.userCards.splice(payload.max)
     }
   },
+
+  // カードのLikeインクリメント
+  updateCardLike(state, payload) {
+    state.cards.some(card => {
+      if (card.id === payload.card.id) {
+        card.like = card.like + 1
+        return true
+      }
+    })
+  },
+
+  // ユーザーの他のカード
   addItem(state, item) {
     state.items.push(item)
   },
@@ -277,6 +319,12 @@ export const getters = {
   },
   getCards(state) {
     return state.cards
+  },
+  getCardDetail(state) {
+    return state.cardDetail
+  },
+  getIsOwner(state) {
+    return state.isOwner
   },
   getUserCards(state) {
     return state.userCards
