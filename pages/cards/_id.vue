@@ -5,7 +5,7 @@
     <div class="container" style="position:relative;">
       <div class="loading"></div>
       <div class="row justify-content-center">
-        <div class="col-12 col-sm-9" style="display: none" id="content">
+        <div class="col-12 col-sm-9" id="content">
           <b-card
             :img-src="$store.getters.getCardDetail.image"
             img-top
@@ -81,8 +81,8 @@ export default {
 
     this.$store.dispatch('fetchCardDetail', { id })
     .then(() => {
-      document.querySelector('#content').style.display = 'block'
-      
+      document.querySelector('#content').classList.add('visible')
+
       if (user.uid === this.$store.getters.getCardDetail.user.uid) {
         this.$store.commit('setIsOwner', true)
       }

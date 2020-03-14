@@ -25,6 +25,32 @@ a:hover {
   display: none;
 }
 
+#content {
+  visibility: hidden;
+
+  &.visible {
+    visibility: visible;
+    animation-duration: .5s;
+    animation-name: fade-in;
+  }
+}
+@keyframes fade-in {
+  0% {
+    visibility: hidden;
+    opacity: 0;
+  }
+
+  50% {
+    visibility: visible;
+    opacity: .5;
+  }
+
+  100% {
+    visibility: visible;
+    opacity: 1;
+  }
+}
+
 $darken-color: #a8a8a8;
 .header {
   background-color: $bg-color;
