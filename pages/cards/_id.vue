@@ -5,7 +5,7 @@
     <div class="container" style="position:relative;">
       <div class="loading"></div>
       <div class="row justify-content-center">
-        <div class="col-12 col-sm-9">
+        <div class="col-12 col-sm-9" style="display: none" id="content">
           <b-card
             :img-src="$store.getters.getCardDetail.image"
             img-top
@@ -75,33 +75,14 @@ export default {
     Header: Header,
     Footer: Footer
   },
-  // async asyncData(context) {
-  //   const id = context.query.id
-  //   const card = await context.store.dispatch('fetchCardDetail', { id })
-  //   const user = context.store.getters.getUser
-  //   const max = 3
-  //   const auth = false
-    
-  //   if (user.id === card.user.uid) {
-  //     auth = !auth
-  //   }
-
-  //   await context.store.dispatch('fetchUserCards', { user: card.user, limit: max + 1 })
-  //   await context.store.commit('updateUserCards', { card, max })
-  //   const userCards = context.store.getters.getUserCards
-
-  //   return {
-  //     card: card,
-  //     auth: auth,
-  //     userCards: userCards
-  //   }
-  // },
   created() {
     const id = this.$route.params.id
     const user = this.$store.getters.getUser
 
     this.$store.dispatch('fetchCardDetail', { id })
     .then(() => {
+      document.querySelector('#content').style.display = 'block'
+      
       if (user.uid === this.$store.getters.getCardDetail.user.uid) {
         this.$store.commit('setIsOwner', true)
       }
