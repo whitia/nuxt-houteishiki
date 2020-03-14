@@ -2,7 +2,7 @@
   <div>
     <Header />
 
-    <div class="container" style="position:relative;">
+    <div class="container" style="position:relative;" id="content">
       <div class="loading"></div>
       <b-form @submit.prevent="updateCard" enctype="multipart/form-data">
         <div class="row justify-content-center">
@@ -85,14 +85,21 @@ export default {
     Footer: Footer
   },
   created() {
+    const id = this.$route.params.id
     const user = this.$store.getters.getUser
-    const card = this.$store.getters.getCardDetail
 
-    if (!user.uid) {
-      this.$router.push('/')
-    } else if (user.uid !== card.user.uid) {
-      this.$router.push('/')
-    }
+    this.$store.dispatch('fetchCardDetail', { id })
+    .then(() => {
+      document.querySelector('#content').classList.add('visible')
+
+      const card = this.$store.getters.getCardDetail
+
+      if (!user.uid) {
+        this.$router.push('/')
+      } else if (user.uid !== card.user.uid) {
+        this.$router.push('/')
+      }
+    })
   },
   methods: {
     updateCard(e) {
