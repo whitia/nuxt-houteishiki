@@ -10,7 +10,7 @@
             <b-form-group label="題名" label-for="title">
               <b-form-input
                 id="title"
-                :value="card.title"
+                :value="$store.getters.getCardDetail.title"
                 required
                 placeholder="題名"
               ></b-form-input>
@@ -22,7 +22,7 @@
             <b-form-group label="値1" label-for="value_1">
               <b-form-input
                 id="value_1"
-                :value="card.formula.value_1"
+                :value="$store.getters.getCardDetail.formula.value_1"
                 required
                 placeholder="値1"
               ></b-form-input>
@@ -33,7 +33,7 @@
             <b-form-group label="値2" label-for="value_2">
               <b-form-input
                 id="value_2"
-                :value="card.formula.value_2"
+                :value="$store.getters.getCardDetail.formula.value_2"
                 required
                 placeholder="値2"
               ></b-form-input>
@@ -44,7 +44,7 @@
             <b-form-group label="答え" label-for="valuation">
               <b-form-input
                 id="valuation"
-                :value="card.formula.valuation"
+                :value="$store.getters.getCardDetail.formula.valuation"
                 required
                 placeholder="答え"
               ></b-form-input>
@@ -59,7 +59,7 @@
               class="mt-3"
               plain
             ></b-form-file>
-            <img :src="card.image" class="img-fluid" />
+            <img :src="$store.getters.getCardDetail.image" class="img-fluid" />
           </div>
         </div>
         <div class="row justify-content-center mt-4">
@@ -84,15 +84,13 @@ export default {
     Header: Header,
     Footer: Footer
   },
-  data: function() {
-    return {
-      card: this.$route.params.card
-    }
-  },
   created() {
-    if (!this.$store.getters.getUser.uid) {
+    const user = this.$store.getters.getUser
+    const card = this.$store.getters.getCardDetail
+
+    if (!user.uid) {
       this.$router.push('/')
-    } else if (this.$store.getters.getUser.uid !== this.card.user.uid) {
+    } else if (user.uid !== card.user.uid) {
       this.$router.push('/')
     }
   },
@@ -101,7 +99,7 @@ export default {
       document.querySelector('.loading').style.display = 'block';
 
       let card = {
-        old_id: this.$route.params.card.id,
+        old_id: this.$store.getters.getCardDetail.id,
         new_id: uuidv4(),
         user: {
           uid: this.$localStorage.get('user_uid'),
@@ -131,7 +129,7 @@ export default {
               })
           })
       } else {
-        card.image = this.$route.params.card.image
+        card.image = this.$store.getters.getCardDetail.image
         this.$store.dispatch('updateCard', card)
           .then(() => {
             setTimeout(() => {

@@ -100,9 +100,11 @@ export default {
 
       document.querySelector('.loading').style.display = 'block';
 
-      this.$store.dispatch('deleteFile', { name: this.card.id })
+      const card = this.$store.getters.getCardDetail
 
-      this.$store.dispatch('deleteCard', { card: this.card })
+      this.$store.dispatch('deleteFile', { name: card.id })
+
+      this.$store.dispatch('deleteCard', { card })
         .then(() => {
           setTimeout(() => {
             this.$router.push('/')
@@ -110,8 +112,9 @@ export default {
         })
     },
     likeCard() {
-      this.$store.commit('updateCardLike', { card: this.card })
-      this.$store.dispatch('likeCard', { card: this.card })
+      const card = this.$store.getters.getCardDetail
+      this.$store.commit('updateCardLike', { card })
+      this.$store.dispatch('likeCard', { card })
     }
   }
 }
