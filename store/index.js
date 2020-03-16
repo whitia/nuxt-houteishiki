@@ -59,7 +59,7 @@ export const actions = {
       cardRef.orderBy('created_at', 'desc').get()
       .then(res => {
         res.forEach((doc) => {
-          commit('addCards', doc.data())
+          commit('addCard', doc.data())
           resolve(true)
         })
       })
