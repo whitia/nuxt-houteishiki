@@ -12,7 +12,6 @@ export const state = () => ({
     name: null
   },
   cards: [],
-  userCards: [],
   cardDetail: {
     id: null,
     title: null,
@@ -30,98 +29,69 @@ export const state = () => ({
     updated_at: null
   },
   isOwner: false,
+  userCards: [],
   items: []
 })
 
 export const actions = {
+  // 認証
   login({ commit }) {
     return new Promise((resolve, reject) => {
       const provider = new firebase.auth.GoogleAuthProvider()
+
       firebase.auth().signInWithPopup(provider)
-        .then(result => {
-          commit('setUser', result.user)
-          resolve(true)
-        })
-        .catch(error => {
-          console.error('An error occurred in login(): ', error)
-          reject(error)
-        })
+      .then(result => {
+        commit('setUser', result.user)
+        resolve(true)
+      })
+      .catch(error => {
+        console.error('An error occurred in login(): ', error)
+        reject(error)
+      })
     })
   },
+
+  // カード一覧
   fetchCards({ commit }) {
     commit('clearCard')
 
     return new Promise((resolve, reject) => {
       cardRef.orderBy('created_at', 'desc').get()
-        .then(res => {
-          res.forEach((doc) => {
-            commit('addCard', doc.data())
-            resolve(true)
-          })
+      .then(res => {
+        res.forEach((doc) => {
+          commit('addCards', doc.data())
+          resolve(true)
         })
-        .catch(error => {
-          console.error('An error occurred in fetchCards(): ', error)
-          reject(error)
-        })
+      })
+      .catch(error => {
+        console.error('An error occurred in fetchCards(): ', error)
+        reject(error)
+      })
     })
   },
+
+  // カード詳細
   fetchCardDetail({ commit }, payload) {
     commit('clearCardDetail')
 
     return new Promise((resolve, reject) => {
       cardRef.where('id', '==', payload.id).get()
-        .then(res => {
-          res.forEach((doc) => {
-            commit('setCardDetail', doc.data())
-            resolve(true)
-          })
+      .then(res => {
+        res.forEach((doc) => {
+          commit('setCardDetail', doc.data())
+          resolve(true)
         })
-        .catch(error => {
-          console.error('An error occurred in fetchCardDetail(): ', error)
-          reject(error)
-        })
-    })
-  },
-  fetchUserCards({ commit }, payload) {
-    commit('clearUserCards')
-
-    return new Promise((resolve, reject) => {
-      cardRef.where('user.uid', '==', payload.user.uid)
-             .orderBy('created_at', 'desc').limit(payload.limit).get()
-        .then(res => {
-          res.forEach((doc) => {
-            commit('addUserCard', doc.data())
-            resolve(true)
-          })
-        })
-        .catch(error => {
-          console.error('An error occurred in fetchUserCards(): ', error)
-          reject(error)
-        })
-    })
-  },
-  uploadImage({ commit }, image) {
-    return new Promise((resolve, reject) => {
-      firestorage.ref('images/' + image.name).put(image.file)
-        .then(snapshot => {
-          snapshot.ref.getDownloadURL()
-            .then(url => {
-              resolve(url)
-            })
-        })
-        .catch(error => {
-          console.error('An error occurred in uploadImage(): ', error)
-          reject(error)
-        })
+      })
+      .catch(error => {
+        console.error('An error occurred in fetchCardDetail(): ', error)
+        reject(error)
+      })
     })
   },
   addCard({ commit }, card) {
     const item = {
       id: card.id,
-      user: {
-        uid: card.user.uid,
-        name: card.user.name
-      },
+      user: card.user,
       title: card.title,
       formula: card.formula,
       image: card.image,
@@ -132,108 +102,145 @@ export const actions = {
 
     return new Promise((resolve, reject) => {
       cardRef.add(item)
-        .then(ref => {
-          resolve(true)
-        })
-        .catch(error => {
-          console.error('An error occurred in addCard(): ', error)
-          reject(error)
-        })
+      .then(ref => {
+        resolve(true)
+      })
+      .catch(error => {
+        console.error('An error occurred in addCard(): ', error)
+        reject(error)
+      })
     })
   },
   updateCard({ commit }, card) {
     return new Promise((resolve, reject) => {
       cardRef.where('id', '==', card.old_id).get()
-        .then(snapshot => {
-          snapshot.forEach(doc => {
-            const item = {
-              id: card.new_id,
-              user: {
-                uid: card.user.uid,
-                name: card.user.name
-              },
-              title: card.title,
-              formula: card.formula,
-              image: card.image,
-              updated_at: firebase.firestore.FieldValue.serverTimestamp()
-            }
+      .then(snapshot => {
+        snapshot.forEach(doc => {
+          const item = {
+            id: card.new_id,
+            user: {
+              uid: card.user.uid,
+              name: card.user.name
+            },
+            title: card.title,
+            formula: card.formula,
+            image: card.image,
+            updated_at: firebase.firestore.FieldValue.serverTimestamp()
+          }
   
-            cardRef.doc(doc.id).update(item)
-              .then(ref => {
-                resolve(true)
-              })
-              .catch(error => {
-                console.error('An error occurred in addCard(): ', error)
-                resolve(error)
-              })
+          cardRef.doc(doc.id).update(item)
+          .then(ref => {
+            resolve(true)
+          })
+          .catch(error => {
+            console.error('An error occurred in updateCard(): ', error)
+            resolve(error)
           })
         })
       })
+    })
   },
   deleteCard({ commit }, payload) {
     return new Promise((resolve, reject) => {
       cardRef.where('id', '==', payload.card.id).get()
-        .then(snapshot => {
-          snapshot.forEach(doc => {
-            cardRef.doc(doc.id).delete()
-              .then(ref => {
-                resolve(true)
-              })
-              .catch(error => {
-                console.error('An error occurred in deleteCard(): ', error)
-                reject(error)
-              })
+      .then(snapshot => {
+        snapshot.forEach(doc => {
+          cardRef.doc(doc.id).delete()
+          .then(ref => {
+            resolve(true)
+          })
+          .catch(error => {
+            console.error('An error occurred in deleteCard(): ', error)
+            reject(error)
           })
         })
+      })
     })
   },
   likeCard({ commit }, payload) {
     return new Promise((resolve, reject) => {
       cardRef.where('id', '==', payload.card.id).get()
-        .then(snapshot => {
-          snapshot.forEach(doc => {
-            cardRef.doc(doc.id).update({ like: payload.card.like })
-              .then(ref => {
-                resolve(true)
-              })
-              .catch(error => {
-                console.error('An error occurred in likeCard(): ', error)
-                reject(error)
-              })
+      .then(snapshot => {
+        snapshot.forEach(doc => {
+          cardRef.doc(doc.id).update({ like: payload.card.like })
+          .then(ref => {
+            resolve(true)
+          })
+          .catch(error => {
+            console.error('An error occurred in likeCard(): ', error)
+            reject(error)
           })
         })
       })
+    })
+  },
+
+  // ユーザーのカード
+  fetchUserCards({ commit }, payload) {
+    commit('clearUserCards')
+
+    return new Promise((resolve, reject) => {
+      cardRef.where('user.uid', '==', payload.user.uid).orderBy('created_at', 'desc')
+             .limit(payload.limit).get()
+      .then(res => {
+        res.forEach((doc) => {
+          commit('addUserCard', doc.data())
+          resolve(true)
+        })
+      })
+      .catch(error => {
+        console.error('An error occurred in fetchUserCards(): ', error)
+        reject(error)
+      })
+    })
+  },
+
+  // 画像ファイル
+  uploadImage({ commit }, image) {
+    return new Promise((resolve, reject) => {
+      firestorage.ref('images/' + image.name).put(image.file)
+      .then(snapshot => {
+        snapshot.ref.getDownloadURL()
+        .then(url => {
+          resolve(url)
+        })
+      })
+      .catch(error => {
+        console.error('An error occurred in uploadImage(): ', error)
+        reject(error)
+      })
+    })
   },
   listFile({ commit }, payload) {
     commit('clearItems')
 
     return new Promise((resolve, reject) => {
       firestorage.ref('images/').listAll()
-        .then(snapshot => {
-          snapshot.items.forEach(item => {
-            item.getDownloadURL()
-              .then(url => {
-                commit('addItem', { name: item.name, url: url })
-              })
+      .then(snapshot => {
+        snapshot.items.forEach(item => {
+          item.getDownloadURL()
+          .then(url => {
+            commit('addItem', { name: item.name, url: url })
           })
-          resolve(true)
         })
-        .catch(error => {
-          console.log('An error occurred in listFile(): ', error)
-          reject(error)
-        })
+        resolve(true)
+      })
+      .catch(error => {
+        console.log('An error occurred in listFile(): ', error)
+        reject(error)
+      })
     })
   },
   deleteFile({ commit }, payload) {
     return new Promise((resolve, reject) => {
       firestorage.ref('images/').child(payload.name).delete()
-        .then(() => {
-          resolve(true)
-        })
-        .catch(error => {
-          console.log('An error occurred in deleteFile(): ', error)
-          reject(error)
-        })
+      .then(() => {
+        resolve(true)
+      })
+      .catch(error => {
+        console.log('An error occurred in deleteFile(): ', error)
+        reject(error)
+      })
     })
   }
 }

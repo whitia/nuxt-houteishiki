@@ -126,23 +126,23 @@ export default {
           name: card.new_id,
           file: card.image
         })
-          .then(image => {
-            card.image = image
-            this.$store.dispatch('updateCard', card)
-              .then(() => {
-                setTimeout(() => {
-                  this.$router.push('/')
-                }, 1000)
-              })
-          })
-      } else {
-        card.image = this.$store.getters.getCardDetail.image
-        this.$store.dispatch('updateCard', card)
+        .then(image => {
+          card.image = image
+          this.$store.dispatch('updateCard', card)
           .then(() => {
             setTimeout(() => {
               this.$router.push('/')
             }, 1000)
           })
+        })
+      } else {
+        card.image = this.$store.getters.getCardDetail.image
+        this.$store.dispatch('updateCard', card)
+        .then(() => {
+          setTimeout(() => {
+            this.$router.push('/')
+          }, 1000)
+        })
       }
     }
   }

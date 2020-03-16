@@ -126,16 +126,16 @@ export default {
         name: card.id,
         file: card.image
       })
-        .then(image => {
-          card.image = image
-          this.$store.dispatch('addCard', card)
-            .then(() => {
-              setTimeout(() => {
-                this.$router.push('/user')
-              }, 1000)
-            })
+      .then(image => {
+        card.image = image
+        this.$store.dispatch('addCard', card)
+        .then(() => {
+          setTimeout(() => {
+            this.$router.push('/user')
+          }, 1000)
         })
+      })
     }
-  },
+  }
 }
 </script>

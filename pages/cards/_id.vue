@@ -105,11 +105,11 @@ export default {
       this.$store.dispatch('deleteFile', { name: card.id })
 
       this.$store.dispatch('deleteCard', { card })
-        .then(() => {
-          setTimeout(() => {
-            this.$router.push('/')
-          }, 1000)
-        })
+      .then(() => {
+        setTimeout(() => {
+          this.$router.push('/')
+        }, 1000)
+      })
     },
     likeCard() {
       const card = this.$store.getters.getCardDetail

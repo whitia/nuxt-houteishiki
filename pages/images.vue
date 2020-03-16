@@ -21,14 +21,12 @@ export default {
   methods: {
     listFile() {
       this.$store.dispatch('listFile')
-        .then(() => {
-        })
     },
     deleteFile(item) {
       this.$store.dispatch('deleteFile', { name: item.name })
-        .then(() => {
-          this.$store.commit('deleteItem', { name: item.name })
-        })
+      .then(() => {
+        this.$store.commit('deleteItem', { name: item.name })
+      })
     }
   }
 }
