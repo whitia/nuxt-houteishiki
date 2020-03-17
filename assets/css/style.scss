@@ -156,3 +156,10 @@ body {
         filter: invert(30%);
     }
 }
+
+.page-enter-active, .page-leave-active {
+  transition: opacity .1s;
+}
+.page-enter, .page-leave-to {
+  opacity: 0;
+}
