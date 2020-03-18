@@ -7,7 +7,7 @@
       </b-navbar-brand>
       <b-navbar-nav class="ml-auto">
 
-        <template v-if="$store.getters.getUser.uid === null">
+        <template v-if="$store.state.users.user.uid === null">
           <b-button size="sm" variant="white" @click="login" class="login-button">
             <img src="https://img.icons8.com/color/16/000000/google-logo.png">
             Google アカウントでログイン
@@ -16,7 +16,7 @@
         <template v-else>
           <b-nav-item-dropdown right>
             <template v-slot:button-content>
-              {{ $store.getters.getUser.name }}
+              {{ $store.state.users.user.name }}
             </template>
             <b-dropdown-item to="/cards/create">新規投稿</b-dropdown-item>
             <b-dropdown-item to="/user">投稿一覧</b-dropdown-item>
@@ -37,23 +37,23 @@ export default {
       displayName: this.$localStorage.get('user_name', null)
     }
 
-    this.$store.commit('setUser', user)
+    this.$store.commit('users/setUser', user)
   },
   methods: {
     login() {
-      this.$store.dispatch('login')
-        .then(() => {
-          this.$localStorage.set('user_uid', this.$store.getters.getUser.uid)
-          this.$localStorage.set('user_name', this.$store.getters.getUser.name)
+      this.$store.dispatch('users/login')
+      .then(() => {
+        this.$localStorage.set('user_uid', this.$store.state.users.user.uid)
+        this.$localStorage.set('user_name', this.$store.state.users.user.name)
 
-          this.$router.push('/')
-        })
+        this.$router.push('/')
+      })
     },
     logout() {
       this.$localStorage.remove('user_uid')
       this.$localStorage.remove('user_name')
 
-      this.$store.commit('setUser', { uid: null, displayName: null })
+      this.$store.commit('users/setUser', { uid: null, displayName: null })
 
       this.$router.push('/')
     }

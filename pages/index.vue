@@ -4,7 +4,7 @@
 
     <div class="container">
       <div class="row" id="content">
-        <div class="col-12 col-sm-4" v-for="(card,key) in $store.getters.getCards" v-bind:key="key">
+        <div class="col-12 col-sm-4" v-for="(card,key) in $store.state.cards.cards" v-bind:key="key">
           <nuxt-link :to="{ name: 'cards-id', params: { id: card.id } }">
             <b-card
               :img-src="card.image"
@@ -47,7 +47,7 @@ export default {
     Footer: Footer
   },
   created() {
-    this.$store.dispatch('fetchCards')
+    this.$store.dispatch('cards/fetchCards')
     .then(() => {
       document.querySelector('#content').classList.add('visible')
     })
@@ -62,8 +62,8 @@ export default {
   },
   methods: {
     likeCard(card) {
-      this.$store.commit('updateCardLike', { card })
-      this.$store.dispatch('likeCard', { card })
+      this.$store.commit('cards/updateCardLike', { card })
+      this.$store.dispatch('card/likeCard', { card })
     }
   }
 }

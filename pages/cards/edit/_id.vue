@@ -10,7 +10,7 @@
             <b-form-group label="題名" label-for="title">
               <b-form-input
                 id="title"
-                :value="$store.getters.getCardDetail.title"
+                :value="$store.state.card.card.title"
                 required
                 placeholder="題名"
               ></b-form-input>
@@ -22,7 +22,7 @@
             <b-form-group label="値1" label-for="value_1">
               <b-form-input
                 id="value_1"
-                :value="$store.getters.getCardDetail.formula.value_1"
+                :value="$store.state.card.card.formula.value_1"
                 required
                 placeholder="値1"
               ></b-form-input>
@@ -33,7 +33,7 @@
             <b-form-group label="値2" label-for="value_2">
               <b-form-input
                 id="value_2"
-                :value="$store.getters.getCardDetail.formula.value_2"
+                :value="$store.state.card.card.formula.value_2"
                 required
                 placeholder="値2"
               ></b-form-input>
@@ -44,7 +44,7 @@
             <b-form-group label="答え" label-for="valuation">
               <b-form-input
                 id="valuation"
-                :value="$store.getters.getCardDetail.formula.valuation"
+                :value="$store.state.card.card.formula.valuation"
                 required
                 placeholder="答え"
               ></b-form-input>
@@ -59,7 +59,7 @@
               class="mt-3"
               plain
             ></b-form-file>
-            <img :src="$store.getters.getCardDetail.image" class="img-fluid" />
+            <img :src="$store.state.card.card.image" class="img-fluid" />
           </div>
         </div>
         <div class="row justify-content-center mt-4">
@@ -86,13 +86,13 @@ export default {
   },
   created() {
     const id = this.$route.params.id
-    const user = this.$store.getters.getUser
+    const user = this.$store.state.users.user
 
-    this.$store.dispatch('fetchCardDetail', { id })
+    this.$store.dispatch('card/fetchCard', { id })
     .then(() => {
       document.querySelector('#content').classList.add('visible')
 
-      const card = this.$store.getters.getCardDetail
+      const card = this.$store.state.card.card
 
       if (!user.uid) {
         this.$router.push('/')
@@ -106,7 +106,7 @@ export default {
       document.querySelector('.loading').style.display = 'block';
 
       let card = {
-        old_id: this.$store.getters.getCardDetail.id,
+        old_id: this.$store.state.card.card.id,
         new_id: uuidv4(),
         user: {
           uid: this.$localStorage.get('user_uid'),
@@ -122,13 +122,13 @@ export default {
       }
 
       if (card.image) {
-        this.$store.dispatch('uploadImage', {
+        this.$store.dispatch('card/uploadImage', {
           name: card.new_id,
           file: card.image
         })
         .then(image => {
           card.image = image
-          this.$store.dispatch('updateCard', card)
+          this.$store.dispatch('card/updateCard', card)
           .then(() => {
             setTimeout(() => {
               this.$router.push('/')
@@ -136,8 +136,8 @@ export default {
           })
         })
       } else {
-        card.image = this.$store.getters.getCardDetail.image
-        this.$store.dispatch('updateCard', card)
+        card.image = this.$store.state.card.card.image
+        this.$store.dispatch('card/updateCard', card)
         .then(() => {
           setTimeout(() => {
             this.$router.push('/')

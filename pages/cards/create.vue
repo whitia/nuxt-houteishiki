@@ -99,7 +99,7 @@ export default {
     }
   },
   created() {
-    if (!this.$store.getters.getUser.uid) {
+    if (!this.$store.state.users.user.uid) {
       this.$router.push('/')
     }
   },
@@ -122,13 +122,13 @@ export default {
         image: this.card.image
       }
 
-      this.$store.dispatch('uploadImage', {
+      this.$store.dispatch('card/uploadImage', {
         name: card.id,
         file: card.image
       })
       .then(image => {
         card.image = image
-        this.$store.dispatch('addCard', card)
+        this.$store.dispatch('card/addCard', card)
         .then(() => {
           setTimeout(() => {
             this.$router.push('/user')
