@@ -3,7 +3,10 @@ $bg-color: #e4e4e4;
 
 body {
   color: $font-color;
-  background-color: #fff;
+  background-image: url('/images/main.png');
+  background-size: cover;
+  background-position: center center;
+  background-attachment: fixed;
   font-family: 'M PLUS Rounded 1c', sans-serif;
 }
 a {
@@ -53,7 +56,6 @@ a:hover {
 
 $darken-color: #a8a8a8;
 .header {
-  background-color: $bg-color;
   .navbar-brand {
     font-size: 24px;
     color: $font-color;
@@ -137,7 +139,6 @@ body {
     bottom: 0;
     width: 100%;
     /* Set the fixed height of the footer here */
-    background-color: $bg-color;
     padding: 16px 0;
     color: $font-color;
     font-size: 12px;
