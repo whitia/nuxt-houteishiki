@@ -4,23 +4,23 @@
 
     <div class="container">
       <div class="row" id="content">
-        <div class="col-12 col-sm-4" v-for="(card,key) in $store.state.cards.cards" v-bind:key="key">
+        <div class="col-12 col-sm-3 px-2" v-for="(card,key) in $store.state.cards.cards" v-bind:key="key">
           <nuxt-link :to="{ name: 'cards-id', params: { id: card.id } }">
             <b-card
               :img-src="card.image"
               img-top
-              img-height="180"
+              img-height="128"
               tag="card"
-              class="mb-5 text-center"
+              class="mb-3"
             >
-            <div class="position-relative">
-              <div class="position-top-left">
-                <img src="https://img.icons8.com/officel/20/000000/hearts.png" class="like"
-                     @click.prevent="likeCard(card)" v-bind:class="{ grayscale: !card.like }" />
-                <br />
-                <span class="small" v-if="card.like">{{ card.like }}</span>
+              <div class="position-relative">
+                <div class="position-top-right">
+                  <img src="https://img.icons8.com/officel/20/000000/hearts.png" class="like"
+                       @click.prevent="likeCard(card)" v-bind:class="{ grayscale: !card.like }" />
+                  <br />
+                  <div class="text-center" v-if="card.like">{{ card.like }}</div>
+                </div>
               </div>
-            </div>
               <b-card-title>{{ card.title }}</b-card-title>
               <b-card-text>
                 {{ card.formula.value_1 }} ×
@@ -57,7 +57,7 @@ export default {
       this.$nuxt.$loading.start()
       setTimeout(() => {
         this.$nuxt.$loading.finish()}
-      , 5000)
+      , 3000)
     })
   },
   methods: {

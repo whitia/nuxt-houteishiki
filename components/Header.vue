@@ -1,6 +1,6 @@
 <template>
   <b-navbar variant="faded" type="light" class="header mb-5">
-    <div class="container px-3">
+    <div class="container">
       <b-navbar-brand to="/">
         <img src="https://img.icons8.com/cotton/32/000000/cat--v4.png"/>
         みんなの方程式

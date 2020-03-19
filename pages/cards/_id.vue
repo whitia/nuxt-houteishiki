@@ -10,10 +10,9 @@
             :img-src="$store.state.card.card.image"
             img-top
             tag="card"
-            class="text-center"
           >
             <div class="position-relative">
-              <div class="position-top-left">
+              <div class="position-top-right">
                 <img src="https://img.icons8.com/officel/20/000000/hearts.png" class="like"
                      @click.prevent="likeCard()" v-bind:class="{ grayscale: !$store.state.card.card.like }" />
                 <br />
@@ -21,12 +20,12 @@
                   {{ $store.state.card.card.like }}
                 </span>
               </div>
-              <div class="position-top-right" v-if="$store.state.card.isOwner">
+              <!-- <div class="position-top-right" v-if="$store.state.card.isOwner">
                 <nuxt-link :to="{ name: 'cards-edit-id', params: { id: $store.state.card.card.id } }">
                   編集
                 </nuxt-link> /
                 <a href="#" @click.prevent="deleteCard()">削除</a>
-              </div>
+              </div> -->
             </div>
             <b-card-title>{{ $store.state.card.card.title }}</b-card-title>
             <b-card-text>
@@ -36,7 +35,7 @@
             </b-card-text>
           </b-card>
           <div class="row my-5">
-            <div class="col-12 mb-3">
+            <div class="col-12">
               <h4>{{ $store.state.card.card.user.name }} の他の方程式</h4>
             </div>
             <div class="col-12 col-sm-4" v-for="(card,key) in $store.state.card.userCards" v-bind:key="key">
@@ -46,7 +45,7 @@
                   img-top
                   img-height="130"
                   tag="card"
-                  class="mb-4 text-center small"
+                  class="small"
                 >
                   <b-card-title>{{ card.title }}</b-card-title>
                   <b-card-text>

@@ -1,4 +1,4 @@
-$font-color: #747474;
+$font-color: #585555;
 $bg-color: #e4e4e4;
 
 body {
@@ -60,6 +60,10 @@ $darken-color: #a8a8a8;
     font-size: 24px;
     color: $font-color;
     transition: all 0.5s;
+    text-shadow: 1px 1px 0 #fff,
+                 -1px 1px 0 #fff,
+                 1px -1px 0 #fff,
+                 -1px -1px 0 #fff;
   }
   .navbar-brand:hover {
     opacity: 0.5;
@@ -86,7 +90,22 @@ $darken-color: #a8a8a8;
 }
 
 .card {
-  transition: all 0.5s;
+  background: lighten(#585555, 60%);
+  transition: all .5s;
+
+  .card-body {
+    padding: 16px;
+
+    .card-title {
+      font-size: 1rem;
+      margin-bottom: 0;
+    }
+  
+    .card-text {
+      font-size: .8rem;
+      opacity: .6;
+    }
+  }
 }
 a:hover .card {
   transform: scale(1.05);
@@ -112,13 +131,13 @@ a:hover .card {
 }
 
 .position-top-left {
-  font-size: 12px;
+  font-size: 8px;
   position: absolute;
   top: 0;
   left: 0;
 }
 .position-top-right {
-  font-size: 12px;
+  font-size: 8px;
   position: absolute;
   top: 0;
   right: 0;
@@ -132,7 +151,7 @@ html {
 }
 body {
   /* Margin bottom by footer height */
-  margin-bottom: 80px;
+  margin-bottom: 64px;
 }
 .footer {
     position: absolute;
