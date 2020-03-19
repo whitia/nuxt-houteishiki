@@ -16,9 +16,9 @@
                 <img src="https://img.icons8.com/officel/20/000000/hearts.png" class="like"
                      @click.prevent="likeCard()" v-bind:class="{ grayscale: !$store.state.card.card.like }" />
                 <br />
-                <span class="small" v-if="$store.state.card.card.like">
+                <div class="text-center" v-if="$store.state.card.card.like">
                   {{ $store.state.card.card.like }}
-                </span>
+                </div>
               </div>
               <!-- <div class="position-top-right" v-if="$store.state.card.isOwner">
                 <nuxt-link :to="{ name: 'cards-edit-id', params: { id: $store.state.card.card.id } }">
