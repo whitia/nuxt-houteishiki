@@ -1,0 +1,42 @@
+$base-color: #585555;
+
+
+$darken-color: #a8a8a8;
+.header {
+  .navbar-brand {
+    font-size: 24px;
+    color: $base-color;
+    transition: all 0.5s;
+    text-shadow: 1px 1px 0 #fff,
+                 -1px 1px 0 #fff,
+                 1px -1px 0 #fff,
+                 -1px -1px 0 #fff;
+  }
+  .navbar-brand:hover {
+    opacity: 0.5;
+  }
+  .login-button {
+    color: $base-color;
+    font-size: 8px;
+    padding: 8px;
+    border: 1px solid $darken-color;
+    transition: all 0.5s;
+    background-color: #fff;
+    img {
+      background-color: transparent;
+      border-right: 1px solid $darken-color;
+      padding: 0;
+      padding-right: 8px;
+      margin-right: 8px;
+    }
+  }
+  .login-button:hover {
+    color: #fff;
+    background-color: $darken-color;
+  }
+
+  .dropdown-item:hover {
+    color: #fff;
+    background: $base-color;
+  }
+}

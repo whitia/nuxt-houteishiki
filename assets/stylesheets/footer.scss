@@ -1,0 +1,43 @@
+$base-color: #585555;
+
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  position: relative;
+  min-height: 100%;
+}
+body {
+/* Margin bottom by footer height */
+margin-bottom: 48px;
+}
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  padding: 16px 0;
+  color: $base-color;
+  font-size: 12px;
+  text-align: center;
+  a {
+      color: #888;
+  }
+  a:hover {
+      color: #666;
+  }
+  img {
+      -webkit-filter: invert(50%);
+      -moz-filter: invert(50%);
+      -o-filter: invert(50%);
+      -ms-filter: invert(50%);
+      filter: invert(30%);
+  }
+}
+
+.page-enter-active, .page-leave-active {
+transition: opacity .1s;
+}
+.page-enter, .page-leave-to {
+opacity: 0;
+}
