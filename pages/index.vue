@@ -3,13 +3,12 @@
     <Header />
 
     <div class="container">
-      <div class="row" id="content">
-        <div class="col-12 col-sm-3 px-2" v-for="(card,key) in $store.state.cards.cards" v-bind:key="key">
+      <div id="content" class="grid-wrap">
+        <div class="grid" v-for="(card,key) in $store.state.cards.cards" v-bind:key="key">
           <nuxt-link :to="{ name: 'cards-id', params: { id: card.id } }">
             <b-card
               :img-src="card.image"
               img-top
-              img-height="128"
               tag="card"
               class="mb-3"
             >

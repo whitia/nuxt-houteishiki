@@ -94,6 +94,16 @@ $darken-color: #a8a8a8;
   }
 }
 
+.grid-wrap {
+  column-count: 4;
+
+  .grid {
+    -webkit-column-break-inside: avoid;
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+}
+
 .card {
   background: lighten(#585555, 60%);
   transition: all .5s;
@@ -107,7 +117,7 @@ $darken-color: #a8a8a8;
     }
   
     .card-text {
-      font-size: .8rem;
+      font-size: .7rem;
       opacity: .6;
     }
   }
