@@ -34,18 +34,15 @@
               {{ $store.state.card.card.formula.valuation }}
             </b-card-text>
           </b-card>
-          <div class="row my-5">
-            <div class="col-12">
-              <h4>{{ $store.state.card.card.user.name }} の他の方程式</h4>
-            </div>
-            <div class="col-12 col-sm-4" v-for="(card,key) in $store.state.card.userCards" v-bind:key="key">
+          <h4 class="mt-3">{{ $store.state.card.card.user.name }} の他の方程式</h4>
+          <div class="grid-wrap">
+            <div class="grid" v-for="(card,key) in $store.state.card.userCards" v-bind:key="key">
               <nuxt-link :to="{ name: 'cards-id', params: { id: card.id } }">
                 <b-card
                   :img-src="card.image"
                   img-top
-                  img-height="130"
                   tag="card"
-                  class="small"
+                  class="mb-3 small"
                 >
                   <b-card-title>{{ card.title }}</b-card-title>
                   <b-card-text>
@@ -87,9 +84,9 @@ export default {
       }
 
       const card = this.$store.state.card.card
-      this.$store.dispatch('card/fetchUserCards', { user: card.user, limit: 4 })
+      this.$store.dispatch('card/fetchUserCards', { user: card.user, limit: 13 })
       .then(() => {
-        this.$store.commit('card/updateUserCards', { card, max: 3 })
+        this.$store.commit('card/updateUserCards', { card, max: 12 })
       })
     })
   },
