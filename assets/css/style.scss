@@ -87,6 +87,11 @@ $darken-color: #a8a8a8;
     color: #fff;
     background-color: $darken-color;
   }
+
+  .dropdown-item:hover {
+    color: #fff;
+    background: #585555;
+  }
 }
 
 .card {
@@ -151,7 +156,7 @@ html {
 }
 body {
   /* Margin bottom by footer height */
-  margin-bottom: 64px;
+  margin-bottom: 48px;
 }
 .footer {
     position: absolute;

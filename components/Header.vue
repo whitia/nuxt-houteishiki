@@ -1,5 +1,5 @@
 <template>
-  <b-navbar variant="faded" type="light" class="header mb-5">
+  <b-navbar variant="faded" type="light" class="header mb-2">
     <div class="container">
       <b-navbar-brand to="/">
         <img src="https://img.icons8.com/cotton/32/000000/cat--v4.png"/>
