@@ -107,6 +107,20 @@ $darken-color: #a8a8a8;
   }
 }
 
+.side-grid-wrap {
+  column-count: 2;
+
+  .side-grid {
+    -webkit-column-break-inside: avoid;
+    page-break-inside: avoid;
+    break-inside: avoid;
+    text-shadow: 1px 1px 0 #fff,
+                 -1px 1px 0 #fff,
+                 1px -1px 0 #fff,
+                 -1px -1px 0 #fff;
+  }
+}
+
 .card {
   background: lighten(#585555, 60%);
   transition: all .5s;

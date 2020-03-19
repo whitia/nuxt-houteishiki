@@ -5,7 +5,7 @@
     <div class="container" style="position:relative;">
       <div class="loading"></div>
       <div class="row justify-content-center" id="content">
-        <div class="col-12 col-sm-9">
+        <div class="col-12 col-sm-8">
           <b-card
             :img-src="$store.state.card.card.image"
             img-top
@@ -34,11 +34,14 @@
               {{ $store.state.card.card.formula.valuation }}
             </b-card-text>
           </b-card>
-          <h4 class="mt-3">{{ $store.state.card.card.user.name }} の他の方程式</h4>
-          <div class="grid-wrap">
-            <div class="grid" v-for="(card,key) in $store.state.card.userCards" v-bind:key="key">
+        </div>
+        <div class="col-12 col-sm-4">
+          <p class="mb-2">{{ $store.state.card.card.user.name }} の他の方程式</p>
+          <div class="side-grid-wrap">
+            <div class="side-grid" v-for="(card,key) in $store.state.card.userCards" v-bind:key="key">
               <nuxt-link :to="{ name: 'cards-id', params: { id: card.id } }">
                 <b-card
+                  overlay
                   :img-src="card.image"
                   img-top
                   tag="card"
@@ -84,9 +87,9 @@ export default {
       }
 
       const card = this.$store.state.card.card
-      this.$store.dispatch('card/fetchUserCards', { user: card.user, limit: 13 })
+      this.$store.dispatch('card/fetchUserCards', { user: card.user, limit: 9 })
       .then(() => {
-        this.$store.commit('card/updateUserCards', { card, max: 12 })
+        this.$store.commit('card/updateUserCards', { card, max: 8 })
       })
     })
   },
