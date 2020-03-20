@@ -5,7 +5,7 @@
     <div class="container" style="position:relative;">
       <div class="loading"></div>
       <div class="row justify-content-center" id="content">
-        <div class="col-12 col-sm-8">
+        <div class="col-12 col-lg-8">
           <b-card
             :img-src="$store.state.card.card.image"
             img-top
@@ -35,8 +35,8 @@
             </b-card-text>
           </b-card>
         </div>
-        <div class="col-12 col-sm-4">
-          <p class="mt-2 mt-sm-0 mb-2">{{ $store.state.card.card.user.name }} の他の方程式</p>
+        <div class="col-12 col-lg-4">
+          <p class="mt-2 mt-lg-0 mb-2">{{ $store.state.card.card.user.name }} の他の方程式</p>
           <div class="side-grid-wrap">
             <div class="side-grid" v-for="(card,key) in $store.state.card.userCards" v-bind:key="key">
               <nuxt-link :to="{ name: 'cards-id', params: { id: card.id } }">
