@@ -79,18 +79,22 @@ export default {
     const user = this.$store.state.users.user
 
     this.$store.dispatch('card/fetchCard', { id })
-    .then(() => {
-      document.querySelector('#content').classList.add('visible')
-
-      if (user.uid === this.$store.state.card.card.user.uid) {
-        this.$store.commit('card/setIsOwner', true)
+    .then(result => {
+      if (result === 404) {
+        this.$router.push('/error/404')
+      } else {
+        document.querySelector('#content').classList.add('visible')
+  
+        if (user.uid === this.$store.state.card.card.user.uid) {
+          this.$store.commit('card/setIsOwner', true)
+        }
+  
+        const card = this.$store.state.card.card
+        this.$store.dispatch('card/fetchUserCards', { user: card.user, limit: 9 })
+        .then(() => {
+          this.$store.commit('card/updateUserCards', { card, max: 8 })
+        })
       }
-
-      const card = this.$store.state.card.card
-      this.$store.dispatch('card/fetchUserCards', { user: card.user, limit: 9 })
-      .then(() => {
-        this.$store.commit('card/updateUserCards', { card, max: 8 })
-      })
     })
   },
   methods: {

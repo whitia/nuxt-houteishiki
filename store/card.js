@@ -33,10 +33,14 @@ export const actions = {
     return new Promise((resolve, reject) => {
       cardRef.where('id', '==', payload.id).get()
       .then(res => {
-        res.forEach((doc) => {
-          commit('setCard', doc.data())
-          resolve(true)
-        })
+        if (res.size) {
+          res.forEach((doc) => {
+            commit('setCard', doc.data())
+            resolve(true)
+          })
+        } else {
+          resolve(404)
+        }
       })
       .catch(error => {
         console.error('An error occurred in fetchCard(): ', error)
