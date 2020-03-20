@@ -8,7 +8,7 @@
         <div class="col-12 col-lg-8">
           <b-card
             :img-src="$store.state.card.card.image"
-            img-top
+            img-bottom
             tag="card"
           >
             <div class="position-relative">
