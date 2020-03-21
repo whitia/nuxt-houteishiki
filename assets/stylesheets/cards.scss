@@ -35,12 +35,13 @@ $base-color: #585555;
     padding: 16px;
 
     .card-title {
-      font-size: 1rem;
+      font-size: 16px;
       margin-bottom: 0;
     }
   
     .card-text {
-      font-size: .7rem;
+      display: inline-block;
+      font-size: 8px;
       opacity: .6;
     }
   }

@@ -6,33 +6,40 @@
       <div class="loading"></div>
       <div class="row justify-content-center" id="content">
         <div class="col-12 col-lg-8">
-          <b-card
-            :img-src="$store.state.card.card.image"
-            img-bottom
-            tag="card"
-          >
-            <div class="position-relative">
-              <div class="position-top-right">
-                <img src="https://img.icons8.com/officel/20/000000/hearts.png" class="like"
-                     @click.prevent="likeCard()" v-bind:class="{ grayscale: !$store.state.card.card.like }" />
-                <br />
-                <div class="text-center" v-if="$store.state.card.card.like">
-                  {{ $store.state.card.card.like }}
+          <b-card no-body>
+            <b-card-body>
+              <div class="position-relative">
+                <div class="position-top-right">
+                  <img src="https://img.icons8.com/officel/20/000000/hearts.png" class="like"
+                       @click.prevent="likeCard()" v-bind:class="{ grayscale: !$store.state.card.card.like }" />
+                  <br />
+                  <div class="text-center" v-if="$store.state.card.card.like">
+                    {{ $store.state.card.card.like }}
+                  </div>
                 </div>
               </div>
-              <!-- <div class="position-top-right" v-if="$store.state.card.isOwner">
-                <nuxt-link :to="{ name: 'cards-edit-id', params: { id: $store.state.card.card.id } }">
-                  編集
-                </nuxt-link> /
-                <a href="#" @click.prevent="deleteCard()">削除</a>
-              </div> -->
-            </div>
-            <b-card-title>{{ $store.state.card.card.title }}</b-card-title>
-            <b-card-text>
-              {{ $store.state.card.card.formula.value_1 }} ×
-              {{ $store.state.card.card.formula.value_2 }} ＝
-              {{ $store.state.card.card.formula.valuation }}
-            </b-card-text>
+              <b-card-title>{{ $store.state.card.card.title }}</b-card-title>
+              <b-card-text>
+                {{ $store.state.card.card.formula.value_1 }} ×
+                {{ $store.state.card.card.formula.value_2 }} ＝
+                {{ $store.state.card.card.formula.valuation }}
+              </b-card-text>
+            </b-card-body>
+            <b-card-img :src="$store.state.card.card.image"></b-card-img>
+            <b-card-body>
+              <div class="position-relative">
+                <div class="position-top-right" v-if="$store.state.card.isOwner" style="font-size:8px;">
+                  <nuxt-link :to="{ name: 'cards-edit-id', params: { id: $store.state.card.card.id } }">
+                    編集
+                  </nuxt-link> /
+                  <a href="#" @click.prevent="deleteCard()">削除</a>
+                </div>
+              </div>
+              <b-card-text>
+                by {{ $store.state.card.card.user.name }},
+                {{ $store.state.card.card.created_at.toDate().toLocaleString() }}
+              </b-card-text>
+            </b-card-body>
           </b-card>
         </div>
         <div class="col-12 col-lg-4">
