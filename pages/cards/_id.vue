@@ -25,10 +25,10 @@
                 {{ $store.state.card.card.formula.valuation }}
               </b-card-text>
             </b-card-body>
-            <b-card-img :src="$store.state.card.card.image"></b-card-img>
+            <b-card-img :src="'https://storage.googleapis.com/whitia.appspot.com/images/' + $store.state.card.card.id"></b-card-img>
             <b-card-body>
               <div class="position-relative">
-                <div class="position-top-right" v-if="$store.state.card.isOwner" style="font-size:8px;">
+                <div class="position-top-right" v-if="$store.state.card.isOwner">
                   <nuxt-link :to="{ name: 'cards-edit-id', params: { id: $store.state.card.card.id } }">
                     編集
                   </nuxt-link> /
@@ -49,7 +49,7 @@
               <nuxt-link :to="{ name: 'cards-id', params: { id: card.id } }">
                 <b-card
                   overlay
-                  :img-src="card.image"
+                  :img-src="'https://storage.googleapis.com/whitia.appspot.com/images/' + card.id"
                   img-top
                   tag="card"
                   class="mb-3 small"

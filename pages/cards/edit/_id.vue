@@ -59,7 +59,7 @@
               class="mt-3"
               plain
             ></b-form-file>
-            <img :src="$store.state.card.card.image" class="img-fluid" />
+            <img :src="'https://storage.googleapis.com/whitia.appspot.com/images/' + $store.state.card.card.id" class="img-fluid" />
           </div>
         </div>
         <div class="row justify-content-center mt-4">

@@ -7,7 +7,7 @@
         <div class="grid" v-for="(card,key) in $store.state.cards.cards" v-bind:key="key">
           <nuxt-link :to="{ name: 'cards-id', params: { id: card.id } }">
             <b-card
-              :img-src="card.image"
+              :img-src="'https://storage.googleapis.com/whitia.appspot.com/images/' + card.id"
               img-top
               tag="card"
               class="mb-3"
