@@ -11,12 +11,12 @@
     "generate": "nuxt generate"
   },
   "dependencies": {
-    "bootstrap-vue": "^2.6.1",
-    "firebase": "^7.10.0",
+    "bootstrap-vue": "^2.10.1",
+    "firebase": "^7.13.2",
     "fs": "0.0.1-security",
     "node-localstorage": "^2.1.5",
-    "nuxt": "^2.0.0",
-    "uuid": "^7.0.2",
+    "nuxt": "^2.12.2",
+    "uuid": "^7.0.3",
     "vue-localstorage": "^0.6.2"
   },
   "devDependencies": {
