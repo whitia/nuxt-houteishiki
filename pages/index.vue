@@ -48,7 +48,9 @@ export default {
   created() {
     this.$store.dispatch('cards/fetchCards')
     .then(() => {
-      document.querySelector('#content').classList.add('visible')
+      if (process.client) {
+        document.querySelector('#content').classList.add('visible')
+      }
     })
   },
   mounted() {
